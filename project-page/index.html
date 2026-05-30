@@ -3,20 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SAMPO++ project page: Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models.">
+  <meta name="description" content="SAMPO++: Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models.">
   <title>SAMPO++ | Embodied World Models</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --paper: #f7f3ec;
-      --surface: #fffdf8;
-      --ink: #1f2422;
-      --muted: #66706b;
-      --line: #ded7ca;
-      --green: #0f6b5c;
-      --coral: #c84d3b;
-      --cyan: #277a8b;
-      --gold: #b98219;
-      --shadow: 0 20px 60px rgba(37, 31, 20, 0.11);
+      --bg: #ffffff;
+      --surface: #f8f8f8;
+      --ink: #1a1a1a;
+      --muted: #555;
+      --line: #e0e0e0;
+      --accent: #1772d0;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
 
     * { box-sizing: border-box; }
@@ -24,748 +23,582 @@
 
     body {
       margin: 0;
-      background: var(--paper);
+      background: var(--bg);
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.58;
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
     img, video { display: block; max-width: 100%; }
 
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      min-height: 64px;
-      padding: 0 5vw;
-      background: rgba(247, 243, 236, 0.92);
-      border-bottom: 1px solid rgba(31, 36, 34, 0.08);
-      backdrop-filter: blur(18px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: 0;
-    }
-
-    .brand-mark {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      background: linear-gradient(135deg, var(--green) 0 45%, var(--cyan) 45% 73%, var(--coral) 73%);
-      box-shadow: 0 8px 18px rgba(15, 107, 92, 0.2);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      color: #39433e;
-      font-size: 14px;
-      font-weight: 650;
-    }
-
-    .nav-links a {
-      padding: 8px 0;
-      border-bottom: 2px solid transparent;
-    }
-
-    .nav-links a:hover { border-color: var(--green); }
-
-    .side-toc {
-      position: fixed;
-      top: 96px;
-      left: 24px;
-      z-index: 12;
-      width: 170px;
-      padding: 16px 14px;
-      border: 1px solid rgba(31, 36, 34, 0.1);
-      border-radius: 8px;
-      background: rgba(255, 253, 248, 0.88);
-      box-shadow: 0 14px 34px rgba(37, 31, 20, 0.08);
-      backdrop-filter: blur(14px);
-    }
-
-    .side-toc strong {
-      display: block;
-      margin-bottom: 10px;
-      color: var(--green);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .side-toc a {
-      display: block;
-      padding: 7px 0;
-      color: #46524d;
-      font-size: 13px;
-      font-weight: 700;
-      border-top: 1px solid rgba(31, 36, 34, 0.07);
-    }
-
-    .side-toc a:hover { color: var(--green); }
-
-    .hero {
-      min-height: 500px;
-      padding: 94px 5vw 70px;
-      border-bottom: 1px solid rgba(31, 36, 34, 0.08);
-    }
-
-    .hero-inner {
-      width: min(1120px, 100%);
+    /* ── Layout ── */
+    .container {
+      width: min(860px, 92vw);
       margin: 0 auto;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 20px;
-      color: var(--green);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .container-wide {
+      width: min(1100px, 94vw);
+      margin: 0 auto;
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 44px;
-      height: 2px;
-      background: var(--green);
+    /* ── Hero ── */
+    .hero {
+      padding: 64px 0 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .venue-badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 4px 14px;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     h1 {
-      margin: 0;
-      max-width: 980px;
-      font-size: clamp(56px, 9vw, 118px);
-      line-height: 0.92;
-      letter-spacing: 0;
-    }
-
-    .subtitle {
-      max-width: 940px;
-      margin: 22px 0 0;
-      color: #35413b;
-      font-size: clamp(23px, 3vw, 38px);
-      line-height: 1.16;
-      font-weight: 760;
+      margin: 0 auto 20px;
+      max-width: 820px;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.18;
+      color: var(--ink);
     }
 
     .authors {
-      max-width: 860px;
-      margin: 22px 0 0;
-      color: var(--muted);
+      margin: 0 auto 6px;
       font-size: 17px;
+      color: #333;
+      line-height: 1.7;
     }
 
-    .actions {
+    .authors a { color: #1a1a1a; font-weight: 500; }
+    .authors a:hover { color: var(--accent); text-decoration: underline; }
+
+    sup { font-size: 11px; color: #888; }
+
+    .affiliations {
+      margin: 4px auto 24px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .link-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin: 32px 0 0;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    .button {
+    .link-btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 18px;
-      border: 1px solid rgba(31, 36, 34, 0.14);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--ink);
+      gap: 6px;
+      padding: 8px 18px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
       font-size: 15px;
-      font-weight: 760;
-      box-shadow: 0 8px 22px rgba(37, 31, 20, 0.08);
+      font-weight: 600;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
 
-    .button.primary {
-      background: var(--green);
-      color: #fff;
-      border-color: var(--green);
+    .link-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(23,114,208,0.13);
+      text-decoration: none;
+      color: var(--accent);
     }
 
-    .section { padding: 78px 5vw; }
+    .link-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 
-    .section.alt {
-      background: var(--surface);
-      border-top: 1px solid rgba(31, 36, 34, 0.08);
-      border-bottom: 1px solid rgba(31, 36, 34, 0.08);
-    }
-
-    .wrap {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-    }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
-      gap: 52px;
-      align-items: end;
-      margin-bottom: 34px;
-    }
+    /* ── Sections ── */
+    .section { padding: 56px 0; }
+    .section.alt { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 
     h2 {
-      margin: 0;
-      font-size: clamp(32px, 5vw, 58px);
-      line-height: 1;
-      letter-spacing: 0;
+      margin: 0 0 22px;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
-    .lead {
-      margin: 0;
+    h2.section-title {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      text-align: center;
       color: var(--muted);
-      font-size: 18px;
+      font-size: 16px;
+      margin: 0 auto 36px;
+      max-width: 680px;
     }
 
+    /* ── Abstract ── */
+    .abstract-text {
+      font-size: 16.5px;
+      line-height: 1.72;
+      color: #222;
+      text-align: justify;
+    }
+
+    /* ── Stats ── */
     .stats {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
+      margin-top: 36px;
     }
 
     .stat {
-      min-height: 150px;
-      padding: 22px;
+      padding: 22px 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--surface);
-      box-shadow: 0 12px 34px rgba(37, 31, 20, 0.06);
+      background: #fff;
+      box-shadow: var(--shadow);
+      text-align: center;
     }
 
     .stat b {
       display: block;
-      color: var(--green);
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1;
-      letter-spacing: 0;
+      color: var(--accent);
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 900;
+      line-height: 1.1;
     }
 
     .stat span {
       display: block;
-      margin-top: 10px;
-      color: #44504a;
-      font-size: 15px;
+      margin-top: 8px;
+      font-size: 14px;
       font-weight: 700;
+      color: #333;
     }
 
     .stat small {
       display: block;
-      margin-top: 6px;
+      margin-top: 5px;
       color: var(--muted);
       font-size: 12px;
     }
 
-    .abstract {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-      gap: 32px;
-      align-items: start;
-    }
-
-    .abstract-copy {
-      padding-right: 16px;
-      color: #333c38;
-      font-size: 18px;
-    }
-
-    .pill-list { display: grid; gap: 12px; }
-
-    .pill {
-      display: grid;
-      grid-template-columns: 48px minmax(0, 1fr);
-      gap: 14px;
-      align-items: start;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbf7ef;
-    }
-
-    .pill strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--ink);
-      font-size: 16px;
-    }
-
-    .pill p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .token {
-      display: grid;
-      place-items: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      color: #fff;
-      font-weight: 900;
-      background: var(--green);
-    }
-
-    .token.coral { background: var(--coral); }
-    .token.cyan { background: var(--cyan); }
-    .token.gold { background: var(--gold); }
-
+    /* ── Figure cards ── */
     .figure-card, .video-card {
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--surface);
+      background: #fff;
       box-shadow: var(--shadow);
     }
 
-    .figure-card img {
-      width: 100%;
-      background: #fff;
-    }
-
-    .media-slider .figure-card {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .media-slider .figure-card img {
-      width: auto;
-      max-width: 100%;
-      max-height: 680px;
-      margin: 0 auto;
-      align-self: center;
-      object-fit: contain;
-    }
+    .figure-card img { width: 100%; background: #fff; }
 
     .figure-caption, .video-caption {
-      padding: 18px 20px 20px;
+      padding: 14px 18px 16px;
       border-top: 1px solid var(--line);
+      font-size: 14px;
+      color: var(--muted);
+      text-align: left;
     }
 
     .figure-caption strong, .video-caption strong {
       display: block;
-      margin-bottom: 4px;
-      font-size: 17px;
+      margin-bottom: 3px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 700;
     }
 
-    .figure-caption p, .video-caption p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .figure-caption p, .video-caption p { margin: 0; }
 
-    .claim-list {
+    /* ── Method pills ── */
+    .method-grid {
       display: grid;
-      gap: 10px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 36px;
+      align-items: start;
+      margin-bottom: 32px;
     }
 
-    .claim-list b {
-      color: #303a35;
+    .method-text { font-size: 16px; color: #333; line-height: 1.7; }
+    .method-text p { margin-top: 0; }
+
+    .pill-list { display: grid; gap: 10px; }
+
+    .pill {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
     }
 
-    .media-slider {
-      display: flex;
-      gap: 22px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x mandatory;
-      padding: 4px 2px 18px;
-      scrollbar-color: var(--green) rgba(31, 36, 34, 0.12);
-      scrollbar-width: thin;
+    .pill strong { display: block; margin-bottom: 2px; font-size: 15px; color: var(--ink); }
+    .pill p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .token {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+      background: #2563eb;
     }
 
-    .media-slider::-webkit-scrollbar { height: 10px; }
-    .media-slider::-webkit-scrollbar-track {
-      background: rgba(31, 36, 34, 0.1);
-      border-radius: 999px;
-    }
-    .media-slider::-webkit-scrollbar-thumb {
-      background: var(--green);
-      border-radius: 999px;
-    }
+    .token.b { background: #dc2626; }
+    .token.c { background: #0891b2; }
+    .token.d { background: #b45309; }
 
-    .slider-control {
-      padding: 0 2px 8px;
-    }
-
-    .slider-control input {
-      width: 100%;
-      accent-color: var(--green);
-      cursor: pointer;
-    }
-
-    .slide {
-      flex: 0 0 min(1040px, 100%);
-      scroll-snap-align: start;
-    }
-
-    .results {
+    /* ── Results ── */
+    .results-grid {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
-      gap: 30px;
+      gap: 28px;
       align-items: start;
     }
 
-    .scoreboard {
-      display: grid;
-      gap: 12px;
-    }
+    .scoreboard { display: grid; gap: 10px; }
 
     .score-row {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 16px;
+      gap: 12px;
       align-items: center;
-      padding: 16px 18px;
+      padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fbf7ef;
+      background: #fff;
     }
 
-    .score-row strong {
-      color: #303a35;
-      font-size: 15px;
+    .score-row strong { color: #333; font-size: 14px; }
+    .score-row span { color: var(--accent); font-size: 22px; font-weight: 900; line-height: 1; }
+
+    /* ── Sliders ── */
+    .media-slider {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      padding: 4px 2px 16px;
+      scrollbar-color: var(--accent) rgba(0,0,0,0.1);
+      scrollbar-width: thin;
     }
 
-    .score-row span {
-      color: var(--green);
-      font-size: 26px;
-      font-weight: 900;
-      line-height: 1;
-    }
+    .media-slider::-webkit-scrollbar { height: 6px; }
+    .media-slider::-webkit-scrollbar-track { background: rgba(0,0,0,0.08); border-radius: 999px; }
+    .media-slider::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 999px; }
 
-    .stack { display: grid; gap: 22px; }
+    .slide { flex: 0 0 min(1040px, 100%); scroll-snap-align: start; }
 
+    .slider-control { padding: 0 2px 6px; }
+    .slider-control input { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    /* ── VLA videos ── */
     .video-pair {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      padding: 14px;
-      background: #f4efe6;
+      gap: 12px;
+      padding: 12px;
+      background: #f0f0f0;
     }
 
-    .video-panel {
-      overflow: hidden;
+    .video-panel { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: #111; }
+    .video-panel video { width: 100%; aspect-ratio: 4/3; background: #111; object-fit: contain; }
+    .video-label { padding: 7px 10px; background: #fff; color: #333; font-size: 12px; font-weight: 700; border-top: 1px solid var(--line); }
+
+    /* ── BibTeX ── */
+    .bibtex-block {
+      position: relative;
+      background: #f5f5f5;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #111;
+      padding: 20px 24px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #333;
+      white-space: pre;
+      overflow-x: auto;
     }
 
-    .video-panel video {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: #111;
-      object-fit: contain;
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      padding: 4px 12px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #444;
+      transition: background 0.15s;
     }
 
-    .video-label {
-      padding: 9px 11px;
-      background: var(--surface);
-      color: #3d4843;
+    .copy-btn:hover { background: #eee; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 28px 5vw;
+      color: #999;
       font-size: 13px;
-      font-weight: 800;
+      text-align: center;
       border-top: 1px solid var(--line);
     }
 
-    footer {
-      padding: 34px 5vw;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-    }
+    footer a { color: #888; text-decoration: underline; }
 
-    @media (min-width: 1440px) and (max-width: 1520px) {
-      .wrap,
-      .hero-inner {
-        width: calc(100% - 400px);
-      }
-    }
-
-    @media (max-width: 1439px) {
-      .side-toc { display: none; }
-    }
-
-    @media (max-width: 900px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
-        padding-top: 14px;
-        padding-bottom: 14px;
-      }
-
-      .nav-links {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 2px;
-      }
-
-      .hero {
-        min-height: 0;
-        padding-top: 62px;
-        padding-bottom: 58px;
-      }
-
-      .section-head,
-      .abstract,
-      .results {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .abstract-copy { padding-right: 0; }
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .method-grid, .results-grid { grid-template-columns: 1fr; }
       .slide { flex-basis: 88vw; }
       .video-pair { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 560px) {
-      .section { padding: 48px 5vw; }
-
-      .authors,
-      .abstract-copy,
-      .lead {
-        font-size: 16px;
-      }
-
+    @media (max-width: 500px) {
+      .section { padding: 40px 0; }
       .stats { grid-template-columns: 1fr; }
-
-      .button {
-        width: 100%;
-      }
-
-      .pill { grid-template-columns: 40px minmax(0, 1fr); }
-
-      .token {
-        width: 40px;
-        height: 40px;
-      }
+      h1 { font-size: 24px; }
+      .link-btn { font-size: 14px; padding: 7px 14px; }
     }
   </style>
 </head>
 <body>
-  <nav class="nav" aria-label="Primary">
-    <a class="brand" href="#top" aria-label="SAMPO++ home">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span>SAMPO++</span>
-    </a>
-    <div class="nav-links">
-      <a href="#overview">Overview</a>
-      <a href="#method">Method</a>
-      <a href="#results">Results</a>
-      <a href="#gallery">Visuals</a>
-      <a href="#vla">VLA Videos</a>
-    </div>
-  </nav>
 
-  <aside class="side-toc" aria-label="Page outline">
-    <strong>Outline</strong>
-    <a href="#top">Title</a>
-    <a href="#overview">Framework</a>
-    <a href="#method">Method</a>
-    <a href="#results">Results</a>
-    <a href="#gallery">Visuals</a>
-    <a href="#vla">VLA Videos</a>
-  </aside>
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="container">
+      <p class="venue-badge">Preprint 2025</p>
+      <h1>SAMPO++: Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models</h1>
 
-  <header class="hero" id="top">
-    <div class="hero-inner">
-      <p class="eyebrow">Embodied world models</p>
-      <h1>SAMPO++</h1>
-      <p class="subtitle">Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models</p>
-      <p class="authors">Sen Wang, Sanping Zhou, Huaiyi Dong, Kun Xia, Gang Hua, and Le Wang</p>
-      <div class="actions">
-        <a class="button primary" href="https://github.com/SanMumumu/SAMPO_plus_plus">Code</a>
-        <a class="button" href="#gallery">Figures</a>
-        <a class="button" href="#vla">VLA Videos</a>
+      <p class="authors">
+        Sen Wang<sup>1,2</sup>,&ensp;
+        Sanping Zhou<sup>1,2</sup>,&ensp;
+        Huaiyi Dong<sup>1,2</sup>,&ensp;
+        Kun Xia<sup>1,2</sup>,&ensp;
+        Gang Hua<sup>3</sup>,&ensp;
+        Le Wang<sup>1,2</sup>
+      </p>
+
+      <p class="affiliations">
+        <sup>1</sup>National Key Laboratory of Human-Machine Hybrid Augmented Intelligence&emsp;
+        <sup>2</sup>Xi'an Jiaotong University&emsp;
+        <sup>3</sup>Wormpex AI Research
+      </p>
+
+      <div class="link-row">
+        <a class="link-btn" href="https://github.com/SanMumumu/SAMPO_plus_plus" target="_blank" rel="noopener">
+          <!-- GitHub icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.54-1.37-1.33-1.73-1.33-1.73-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.28-1.23 3.28-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Code
+        </a>
+        <a class="link-btn" href="https://sanmumumu.github.io/SAMPO/" target="_blank" rel="noopener">
+          <!-- Document icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Conference Version (NeurIPS 2025)
+        </a>
+        <a class="link-btn" href="#citation">
+          <!-- Quote icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          Cite
+        </a>
       </div>
     </div>
   </header>
 
   <main>
+
+    <!-- ── Abstract ── -->
     <section class="section">
-      <div class="wrap">
+      <div class="container">
+        <h2 class="section-title">Abstract</h2>
+        <p class="abstract-text">
+          Embodied world models must jointly satisfy two competing demands: maintaining causally coherent temporal dynamics and synthesizing perceptually rich future observations. Existing approaches address these demands in isolation — discrete autoregressive models reason well over time but suffer from quantization artifacts, while continuous generative models produce high-fidelity frames but cannot autoregressively condition on arbitrarily long histories. We present <strong>SAMPO++</strong>, an embodied world model that resolves this dichotomy through a unified <em>Predict-then-Refine</em> paradigm operating entirely in a continuous latent space. A temporal autoregressive transformer first establishes structural priors for future states; a scale-wise flow matching generator then refines these priors from noise into high-fidelity visual predictions. Action signals are injected at every scale through our <strong>Action-adaptive Dynamics Modulation (ADM)</strong>, and long-horizon coherence is preserved by <strong>Scale-Aware RoPE (SA-RoPE)</strong> together with flow trajectory rectification. SAMPO++ extends its NeurIPS 2025 predecessor with a continuous latent space, scale-wise refinement, and improved action conditioning, yielding state-of-the-art performance on robotic video prediction (BAIR, RoboNet), autonomous driving (Cityscapes, OpenDV-YouTube), and model-based control (VP<sup>2</sup>, Meta-World).
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Key numbers ── -->
+    <section class="section alt">
+      <div class="container-wide">
         <div class="stats">
           <article class="stat">
             <b>52.5</b>
             <span>BAIR FVD</span>
-            <small>2 -> 28 long-horizon prediction, lower is better.</small>
+            <small>2&rarr;28 long-horizon prediction (lower is better)</small>
           </article>
           <article class="stat">
             <b>64.8</b>
             <span>48-frame FVD</span>
-            <small>Maintains stability in extended prediction.</small>
+            <small>Maintains stability in extended prediction</small>
           </article>
           <article class="stat">
             <b>75.4%</b>
             <span>VP<sup>2</sup> success</span>
-            <small>Average downstream visual planning success.</small>
+            <small>Average downstream visual planning success</small>
           </article>
           <article class="stat">
             <b>49.8</b>
             <span>RoboNet FVD</span>
-            <small>Action-conditioned 64x64 video prediction.</small>
+            <small>Action-conditioned 64&times;64 video prediction</small>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section alt" id="overview">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Conceptual comparison and framework overview.</h2>
-          <p class="lead">SAMPO++ resolves the trade-off between discrete autoregressive reasoning and continuous synthesis through a unified Predict-then-Refine world-modeling paradigm.</p>
-        </div>
+    <!-- ── Overview ── -->
+    <section class="section" id="overview">
+      <div class="container-wide">
+        <h2 class="section-title">Framework Overview</h2>
+        <p class="section-subtitle">SAMPO++ resolves the trade-off between discrete autoregressive reasoning and continuous synthesis through a unified Predict-then-Refine world-modeling paradigm.</p>
         <article class="figure-card">
           <img src="assets/figures/fig1.webp" alt="Conceptual comparison and framework overview from the SAMPO++ paper.">
           <div class="figure-caption">
-            <strong>Conceptual comparison and framework overview</strong>
-            <div class="claim-list">
-              <p><b>Current dichotomy:</b> discrete autoregressive world models are hindered by quantization artifacts, while standard continuous models are restricted to fixed-length synthesis and struggle with interactive long-horizon generation.</p>
-              <p><b>SAMPO++ solution:</b> a unified Predict-then-Refine paradigm combines temporal autoregression with scale-wise flow matching directly on a continuous latent manifold, with Action-adaptive Dynamics Modulation for precise, frequency-aware control.</p>
-              <p><b>Performance:</b> SAMPO++ improves long-term physical coherence and action fidelity, mitigating degradation observed in prior world-model baselines.</p>
-            </div>
+            <strong>Figure 1. Conceptual comparison and framework overview.</strong>
+            <p><b>Left:</b> current world models dichotomize into discrete autoregressive models (quantization artifacts) and continuous fixed-length generators (limited temporal horizon). <b>Right:</b> SAMPO++ unifies both via a Predict-then-Refine paradigm on a continuous latent manifold, with Action-adaptive Dynamics Modulation (ADM) for frequency-aware action control.</p>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section" id="method">
-      <div class="wrap stack">
-        <div class="section-head">
-          <h2>Predict, then refine.</h2>
-          <p class="lead">SAMPO++ bridges discrete autoregressive reasoning and continuous high-fidelity synthesis in a single continuous latent-space world model.</p>
-        </div>
-        <div class="abstract">
-          <div class="abstract-copy">
-            <p>Action-conditioned world models must keep causal dynamics coherent while synthesizing detailed future observations. SAMPO++ uses a temporal autoregressive transformer to establish structural priors, then a scale-wise flow matching generator refines future states from noise into high-fidelity visual predictions.</p>
-            <p>ADM injects action signals through scale-aware feature statistics, while SA-RoPE and flow trajectory rectification reduce long-term structural degradation.</p>
+    <!-- ── Method ── -->
+    <section class="section alt" id="method">
+      <div class="container-wide">
+        <h2 class="section-title">Method</h2>
+        <p class="section-subtitle">A temporal autoregressive planner and a scale-wise flow renderer operate in concert on a shared continuous latent space.</p>
+        <div class="method-grid">
+          <div class="method-text">
+            <p>SAMPO++ encodes observations into a multi-scale continuous latent representation using an asymmetric tokenizer. A <strong>temporal autoregressive transformer</strong> attends causally across time to predict coarse future structure. A <strong>scale-wise flow matching generator</strong> then iteratively refines each latent scale from Gaussian noise to a high-fidelity future state, conditioned on the autoregressive prior.</p>
+            <p><strong>ADM</strong> injects action embeddings through scale-aware feature statistics at every refinement level. <strong>SA-RoPE</strong> extends rotary positional embeddings with explicit scale awareness, preventing positional aliasing over long horizons. Flow trajectory rectification straightens denoising paths, reducing inference steps without quality loss.</p>
           </div>
           <div class="pill-list" aria-label="Method highlights">
             <article class="pill">
               <span class="token">1</span>
-              <div><strong>Continuous latent space</strong><p>Avoids discrete quantization artifacts and resolution bottlenecks.</p></div>
+              <div><strong>Continuous latent space</strong><p>Avoids discrete quantization artifacts and resolution bottlenecks of VQ-based world models.</p></div>
             </article>
             <article class="pill">
-              <span class="token coral">2</span>
-              <div><strong>Temporal autoregression</strong><p>Builds coarse future structure before visual detail synthesis.</p></div>
+              <span class="token b">2</span>
+              <div><strong>Temporal autoregression</strong><p>Causally builds coarse future structure from the full observation history.</p></div>
             </article>
             <article class="pill">
-              <span class="token cyan">3</span>
-              <div><strong>Scale-wise flow matching</strong><p>Refines future latent scales with high perceptual fidelity.</p></div>
+              <span class="token c">3</span>
+              <div><strong>Scale-wise flow matching</strong><p>Refines future latent scales progressively for high perceptual fidelity.</p></div>
             </article>
             <article class="pill">
-              <span class="token gold">4</span>
-              <div><strong>Action-aware control</strong><p>Improves controllability and temporal stability for embodied planning.</p></div>
+              <span class="token d">4</span>
+              <div><strong>Action-adaptive dynamics (ADM)</strong><p>Scale-aware action conditioning improves controllability and temporal stability.</p></div>
             </article>
           </div>
         </div>
         <article class="figure-card">
           <img src="assets/figures/fig2.webp" alt="SAMPO++ model overview showing temporal autoregressive planning and scale-wise flow rendering." loading="lazy">
           <div class="figure-caption">
-            <strong>SAMPO++ overview</strong>
-            <p>A temporal autoregressive planner predicts structural future priors; a scale-wise flow renderer synthesizes high-fidelity future latent states.</p>
+            <strong>Figure 2. SAMPO++ model overview.</strong>
+            <p>The temporal autoregressive planner conditions on past latents and actions to predict structural future priors; the scale-wise flow renderer denoises each latent scale conditioned on the prior and the ADM-injected action signal.</p>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="section alt" id="results">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Sharper futures, better control.</h2>
-          <p class="lead">Across robotic video prediction, driving video prediction, and model-based control, SAMPO++ improves both visual quality and downstream planning.</p>
-        </div>
-        <div class="results">
+    <!-- ── Results ── -->
+    <section class="section" id="results">
+      <div class="container-wide">
+        <h2 class="section-title">Quantitative Results</h2>
+        <p class="section-subtitle">SAMPO++ achieves state-of-the-art results across robotic video prediction, autonomous driving prediction, and model-based visual planning.</p>
+        <div class="results-grid">
           <div class="scoreboard" aria-label="Selected quantitative results">
-            <div class="score-row"><strong>BAIR FVD, 2 -> 28 frames</strong><span>52.5</span></div>
-            <div class="score-row"><strong>BAIR FVD, 2 -> 48 frames</strong><span>64.8</span></div>
-            <div class="score-row"><strong>RoboNet FVD, 64x64</strong><span>49.8</span></div>
+            <div class="score-row"><strong>BAIR FVD, 2&rarr;28 frames</strong><span>52.5</span></div>
+            <div class="score-row"><strong>BAIR FVD, 2&rarr;48 frames</strong><span>64.8</span></div>
+            <div class="score-row"><strong>RoboNet FVD, 64&times;64</strong><span>49.8</span></div>
             <div class="score-row"><strong>BAIR action-conditioned FVD</strong><span>47.6</span></div>
-            <div class="score-row"><strong>VP<sup>2</sup> average success</strong><span>75.4%</span></div>
+            <div class="score-row"><strong>VP<sup>2</sup> average success rate</strong><span>75.4%</span></div>
           </div>
           <article class="figure-card">
             <img src="assets/figures/fig_exp1.webp" alt="Quantitative and ablation summary figure from the SAMPO++ paper." loading="lazy">
             <div class="figure-caption">
-              <strong>Quantitative and ablation summary</strong>
-              <p>Ablations show the combined effect of continuous latents, ADM, SA-RoPE, and flow rectification.</p>
+              <strong>Figure 3. Quantitative and ablation results.</strong>
+              <p>Ablations isolate the contribution of continuous latents, ADM, SA-RoPE, and flow trajectory rectification. Each component provides complementary gains in FVD and downstream task success.</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="gallery">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Visual results.</h2>
-          <p class="lead">Qualitative results span robotic manipulation, driving scenes, visual planning, and Meta-World control, showing coherent long-horizon dynamics and action-conditioned detail.</p>
-        </div>
+    <!-- ── Qualitative gallery ── -->
+    <section class="section alt" id="gallery">
+      <div class="container-wide">
+        <h2 class="section-title">Qualitative Results</h2>
+        <p class="section-subtitle">Qualitative comparisons across robotic manipulation, autonomous driving, visual planning, and Meta-World control.</p>
         <div class="media-slider" id="visual-slider" aria-label="Visual result slides">
           <article class="figure-card slide">
             <img src="assets/figures/fig64.webp" alt="SAMPO++ visualization on BAIR and OpenX-Embodiment datasets." loading="lazy">
             <div class="figure-caption">
-              <strong>BAIR and OpenX-Embodiment</strong>
+              <strong>Figure 4. BAIR and OpenX-Embodiment (64&times;64).</strong>
               <p>Future frames preserve object structure and interaction dynamics over robotic manipulation sequences.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/fig256.webp" alt="SAMPO++ visualization on RoboNet and 1X World Model." loading="lazy">
             <div class="figure-caption">
-              <strong>RoboNet and 1X World Model</strong>
+              <strong>Figure 5. RoboNet and 1X World Model (256&times;256).</strong>
               <p>Higher-resolution robotic prediction demonstrates detailed action-conditioned synthesis.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/fig_city.webp" alt="Long-term video prediction on Cityscapes driving scenes." loading="lazy">
             <div class="figure-caption">
-              <strong>Cityscapes long-horizon prediction</strong>
-              <p>Driving scenarios remain coherent over long-horizon generation.</p>
+              <strong>Figure 6. Cityscapes long-horizon prediction.</strong>
+              <p>Driving scenarios remain perceptually coherent over extended generation horizons.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/fig_opendv.webp" alt="High-resolution long-term video prediction on OpenDV-YouTube." loading="lazy">
             <div class="figure-caption">
-              <strong>OpenDV-YouTube</strong>
+              <strong>Figure 7. OpenDV-YouTube in-the-wild driving.</strong>
               <p>In-the-wild driving scenes retain robust dynamic modeling and resist visual artifacts.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/fig_vp2.webp" alt="Visualization on VP2 benchmark tasks." loading="lazy">
             <div class="figure-caption">
-              <strong>VP<sup>2</sup> benchmark</strong>
-              <p>Visual planning examples from RoboDesk and RoboSuite.</p>
+              <strong>Figure 8. VP<sup>2</sup> visual planning.</strong>
+              <p>Visual planning examples from RoboDesk and RoboSuite benchmark tasks.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/fig_mw.webp" alt="Visualization on Meta-World tasks." loading="lazy">
             <div class="figure-caption">
-              <strong>Meta-World tasks</strong>
-              <p>Predicted trajectories align with reward-bearing state changes.</p>
+              <strong>Figure 9. Meta-World model-based control.</strong>
+              <p>Predicted trajectories align with reward-bearing state changes across manipulation tasks.</p>
             </div>
           </article>
           <article class="figure-card slide">
             <img src="assets/figures/metaworld_single.webp" alt="Meta-World task-specific learning curves." loading="lazy">
             <div class="figure-caption">
-              <strong>Model-based RL curves</strong>
-              <p>Task-specific success rates across Meta-World control tasks.</p>
+              <strong>Figure 10. Model-based RL learning curves.</strong>
+              <p>Task-specific success rates across Meta-World control tasks, comparing SAMPO++ to prior world-model baselines.</p>
             </div>
           </article>
         </div>
@@ -775,12 +608,11 @@
       </div>
     </section>
 
-    <section class="section alt" id="vla">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>VLA rollout videos.</h2>
-          <p class="lead">SAMPO++ is used as a simulator for VLA action prediction, pairing each real robot rollout with its predicted video trajectory.</p>
-        </div>
+    <!-- ── VLA videos ── -->
+    <section class="section" id="vla">
+      <div class="container-wide">
+        <h2 class="section-title">VLA Rollout Videos</h2>
+        <p class="section-subtitle">SAMPO++ serves as a learned simulator for VLA action prediction. Each pair shows the real robot rollout alongside the corresponding SAMPO++-predicted video trajectory.</p>
         <div class="media-slider" id="vla-slider" aria-label="VLA rollout video slides">
           <article class="video-card slide">
             <div class="video-pair">
@@ -790,52 +622,52 @@
               </div>
               <div class="video-panel">
                 <video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0003/pred_video_all.mp4"></video>
-                <div class="video-label">SAMPO++ predicted rollout</div>
+                <div class="video-label">SAMPO++ predicted</div>
               </div>
             </div>
-            <div class="video-caption"><strong>put eggplant into yellow basket - ep0003</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put eggplant into yellow basket — ep0003</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0019/ep0019_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0019/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0019/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put eggplant into yellow basket - ep0019</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put eggplant into yellow basket — ep0019</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0025/ep0025_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0025/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0025/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put eggplant into yellow basket - ep0025</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put eggplant into yellow basket — ep0025</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0030/ep0030_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0030/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0030/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put eggplant into yellow basket - ep0030</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put eggplant into yellow basket — ep0030</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0026/ep0026_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0026/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0026/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put the spoon on the towel - ep0026</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put the spoon on the towel — ep0026</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0033/ep0033_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0033/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0033/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put the spoon on the towel - ep0033</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put the spoon on the towel — ep0033</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
           <article class="video-card slide">
             <div class="video-pair">
               <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0038/ep0038_True.mp4"></video><div class="video-label">Real rollout</div></div>
-              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0038/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted rollout</div></div>
+              <div class="video-panel"><video controls muted playsinline preload="metadata" src="assets/vla/widowx_spoon_on_towel/ep0038/pred_video_all.mp4"></video><div class="video-label">SAMPO++ predicted</div></div>
             </div>
-            <div class="video-caption"><strong>put the spoon on the towel - ep0038</strong><p>Actual operation video compared with the predicted future generated by SAMPO++.</p></div>
+            <div class="video-caption"><strong>Put the spoon on the towel — ep0038</strong><p>Real operation video paired with the future predicted by SAMPO++.</p></div>
           </article>
         </div>
         <div class="slider-control">
@@ -843,10 +675,41 @@
         </div>
       </div>
     </section>
+
+    <!-- ── Citation ── -->
+    <section class="section alt" id="citation">
+      <div class="container">
+        <h2 class="section-title">Citation</h2>
+        <p class="section-subtitle">If you find SAMPO++ useful in your research, please consider citing our work.</p>
+        <div style="position:relative;">
+          <pre class="bibtex-block" id="bibtex-text">@article{wang2025sampopp,
+  title     = {SAMPO++: Unified Temporal Autoregression and Scale-Wise Flow Matching
+               for Embodied World Models},
+  author    = {Wang, Sen and Zhou, Sanping and Dong, Huaiyi and Xia, Kun and
+               Hua, Gang and Wang, Le},
+  journal   = {arXiv preprint},
+  year      = {2025}
+}</pre>
+          <button class="copy-btn" onclick="copyBib(this)" aria-label="Copy BibTeX">Copy</button>
+        </div>
+        <p style="margin-top:18px;font-size:14px;color:var(--muted);text-align:center;">
+          You may also cite the conference version:
+          <a href="https://sanmumumu.github.io/SAMPO/" target="_blank" rel="noopener">SAMPO (NeurIPS 2025)</a>.
+        </p>
+      </div>
+    </section>
+
   </main>
 
-  <footer>Built from the figures and video assets in the SAMPO++ repository.</footer>
+  <footer>
+    This page is built upon the
+    <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>
+    project page template.
+    &copy; 2025 The SAMPO++ Authors.
+  </footer>
+
   <script>
+    /* Slider sync */
     document.querySelectorAll("[data-slider]").forEach((control) => {
       const slider = document.getElementById(control.dataset.slider);
       if (!slider) return;
@@ -859,18 +722,23 @@
 
       slider.addEventListener("scroll", () => {
         const sliderLeft = slider.getBoundingClientRect().left;
-        let active = 0;
-        let nearest = Number.POSITIVE_INFINITY;
-        slides.forEach((slide, index) => {
-          const distance = Math.abs(slide.getBoundingClientRect().left - sliderLeft);
-          if (distance < nearest) {
-            nearest = distance;
-            active = index;
-          }
+        let active = 0, nearest = Infinity;
+        slides.forEach((slide, i) => {
+          const d = Math.abs(slide.getBoundingClientRect().left - sliderLeft);
+          if (d < nearest) { nearest = d; active = i; }
         });
         control.value = String(active);
       }, { passive: true });
     });
+
+    /* BibTeX copy */
+    function copyBib(btn) {
+      const text = document.getElementById("bibtex-text").textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
