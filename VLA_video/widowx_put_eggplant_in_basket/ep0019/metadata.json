@@ -1,0 +1,43 @@
+{
+  "env_name": "widowx_put_eggplant_in_basket",
+  "api": "simpler_env",
+  "episode_idx": 19,
+  "success": true,
+  "steps_taken": 25,
+  "instruction": "put eggplant into yellow basket",
+  "max_steps": 300,
+  "gripper_mode": "zero_one_to_minus_one_one",
+  "image_size": 128,
+  "client_video": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/results/widowx_put_eggplant_in_basket/ep0019/ep0019_True.mp4",
+  "prediction_videos": [
+    {
+      "source": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/visualization/real/put eggplant into yellow basket_20260528_045938/pred_video_0.mp4",
+      "resolved_source": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/visualization/real/put eggplant into yellow basket_20260528_045938/pred_video_0.mp4",
+      "local": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/results/widowx_put_eggplant_in_basket/ep0019/pred_video_0.mp4"
+    },
+    {
+      "source": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/visualization/real/put eggplant into yellow basket_20260528_045938/pred_video_4.mp4",
+      "resolved_source": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/visualization/real/put eggplant into yellow basket_20260528_045938/pred_video_4.mp4",
+      "local": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/results/widowx_put_eggplant_in_basket/ep0019/pred_video_4.mp4"
+    }
+  ],
+  "prediction_video_all": "pred_video_all.mp4",
+  "server_visualization_dir": "/mnt/hwdata/wangsen/WAM/lingbot-va/OUTPUTS/simpler_eval/20260528_034426_ckpt35000_closed_loop_20v50a_gripper01to11/visualization/real/put eggplant into yellow basket_20260528_045938",
+  "server_run_name": "put eggplant into yellow basket_20260528_045938",
+  "last_info": {
+    "elapsed_steps": 25,
+    "moved_correct_obj": true,
+    "moved_wrong_obj": false,
+    "is_src_obj_grasped": false,
+    "consecutive_grasp": false,
+    "src_on_target": "True",
+    "episode_stats": {
+      "moved_correct_obj": true,
+      "moved_wrong_obj": false,
+      "is_src_obj_grasped": true,
+      "consecutive_grasp": true,
+      "src_on_target": "True"
+    },
+    "success": "True"
+  }
+}
