@@ -1,7 +1,6 @@
 # SAMPO++
 
 [![Project Page](https://img.shields.io/badge/Project%20Page-SAMPO%2B%2B-lightgreen)](https://sanmumumu.github.io/SAMPO_plus_plus/)
-[![Paper](https://img.shields.io/badge/arXiv-2509.15536-b31b1b.svg)](https://arxiv.org/abs/2509.15536)
 
 This repository now contains a SAMPO++ continuous-latent 64x64 world-model path implemented under `SAMPO/sampo_plus/`.
 The new main pipeline is:
