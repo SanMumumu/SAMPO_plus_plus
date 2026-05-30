@@ -1,0 +1,19 @@
+\begin{algorithm}[t]
+\caption{SAMPO++ Inference}
+\label{algo:inference}
+\begin{algorithmic}[1]
+\REQUIRE Context Frames $\boldsymbol{x}_{\text{ctx}}$, Action Plan $\boldsymbol{a}_{\text{fut}}$, Decoder $\mathcal{D}$
+\STATE Initialize history buffer: $\mathcal{H} = \{ \mathcal{E}(\boldsymbol{x}_{\text{ctx}})^S \}$; 
+\FOR{$k = 1, \dots, K$}
+    \STATE $\hat{\boldsymbol{h}}_k = \mathcal{T}(\mathcal{H}, \boldsymbol{a}_{<k})$;
+    \STATE $\boldsymbol{z}_k^0 = \boldsymbol{0}$; 
+    \FOR{$s = 1, \dots, S$}
+        \STATE $\boldsymbol{c} = [ \text{up}(\boldsymbol{z}_k^{s-1}), \hat{\boldsymbol{h}}_k ]$;
+        \STATE $\boldsymbol{m} = \text{ADM}(\boldsymbol{a}_k, s)$; 
+        \STATE $\boldsymbol{z}_k^s = \text{ODESolve}\big(\mathcal{N}(\boldsymbol{0}, \boldsymbol{I}), v_\theta(\cdot, \tau, \boldsymbol{c}, \boldsymbol{m}), \text{Rectify}\big)$; 
+    \ENDFOR
+    \STATE $\mathcal{H} \leftarrow \mathcal{H} \cup \{\boldsymbol{z}_k^S\}$; 
+\ENDFOR
+\RETURN $\hat{\boldsymbol{x}}_{\text{fut}} = \mathcal{D}(\mathcal{H}_{\text{fut}})$;
+\end{algorithmic}
+\end{algorithm}

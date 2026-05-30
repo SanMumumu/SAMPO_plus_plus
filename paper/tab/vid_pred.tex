@@ -1,0 +1,37 @@
+\begin{table*}[t]
+\caption{\textbf{Video prediction results on BAIR and RoboNet datasets.} Following standard evaluation protocols, models are tasked with predicting 15 future frames conditioned on a single context frame for the BAIR ($1 \rightarrow 15$ frames), and 10 future frames conditioned on two context frames for the RoboNet ($2 \rightarrow 10$ frames). We evaluate the generation fidelity on both datasets across 3 random seeds and report the mean and standard deviation. ``-'' indicates values not reported in the original papers. Note that LPIPS and SSIM are scaled by 100 for better readability. 
+}
+\label{tab:video_pred}
+\centering
+\scalebox{1.1}{ 
+    \begin{tabular}{lcccc|lcccc}
+        \toprule
+        \textbf{BAIR}~\cite{ebert2017selfBAIR}     & \multicolumn{1}{l}{FVD↓} & \multicolumn{1}{l}{PSNR↑} & \multicolumn{1}{l}{SSIM↑} & \multicolumn{1}{l|}{LPIPS↓} & \textbf{RoboNet}~\cite{dasari2019robonet}   & \multicolumn{1}{l}{FVD↓} & \multicolumn{1}{l}{PSNR↑} & \multicolumn{1}{l}{SSIM↑} & \multicolumn{1}{l}{LPIPS↓} \\ \midrule
+        \rowcolor{grey}
+        \multicolumn{5}{c|}{\textit{action-free \& 64×64 resolution}}                                                           & \multicolumn{5}{c}{\textit{action-conditioned \& 64×64 resolution}}                                                   \\
+        MaskViT~\cite{gupta2022maskvit}   & 93.7                    & -                        & -                        & -                          & MaskViT~\cite{gupta2022maskvit}   & 133.5                   & 23.2                     & 80.5                     & 4.2                       \\
+        FitVid~\cite{babaeizadeh2021fitvid}    & 93.6                    & -                        & -                        & -                          & FitVid~\cite{babaeizadeh2021fitvid}    & 62.5                    & 28.2                     & 89.3                     &\textbf{2.4}                       \\
+        MCVD~\cite{voleti2022mcvd}      & 89.5                    & 16.9                     & 78.0                     & -                          & SVG~\cite{villegas2019high}       & 123.2                   & 23.9                     & 87.8                     & 6.0                       \\
+        MAGVIT~\cite{yu2023magvit}    & 62.0                    & 19.3                     & 78.7                     & 12.3                       & GHVAE~\cite{wu2021greedy}     & 95.2                    & 24.7                     & 89.1                     & 3.6                       \\
+        iVideoGPT~\cite{wu2024ivideogpt} & 75.0                    & 20.4                     & 82.3                     & 9.5                        & iVideoGPT~\cite{wu2024ivideogpt} & 63.2                    & 27.8                     & 90.6                     & 4.9                       \\ 
+        SAMPO~\cite{wang2025sampo} & 65.7 & 22.3 & 86.7 & 8.4 & SAMPO~\cite{wang2025sampo} & 57.1 & 29.3 & 94.1 & 3.3 \\
+        \midrule
+        \rowcolor{lightblue}
+        SAMPO++ (Ours) & \textbf{59.4}$^{\pm 1.5}$ & \textbf{23.1}$^{\pm 0.2}$ & \textbf{88.5}$^{\pm 0.4}$ & \textbf{7.2}$^{\pm 0.1}$ & SAMPO++ (Ours) & \textbf{49.8}$^{\pm 1.2}$ & \textbf{30.5}$^{\pm 0.1}$ & \textbf{95.2}$^{\pm 0.2}$ & 2.6$^{\pm 0.1}$ \\
+
+        \midrule
+        \rowcolor{grey}
+        \multicolumn{5}{c|}{\textit{action-conditioned \& 64×64 resolution}}                                                    & \multicolumn{5}{c}{\textit{action-conditioned \& 256×256 resolution}}                                                 \\
+        MaskViT~\cite{gupta2022maskvit}   & 70.5                    & -                        & -                        & -                          & MaskViT~\cite{gupta2022maskvit}   & 211.7                   & 20.4                     & 67.1                     & 17.0                      \\
+        iVideoGPT~\cite{wu2024ivideogpt} & 60.8                    & 24.5                     & 90.2                     & 5.0                        & iVideoGPT~\cite{wu2024ivideogpt} & 197.9                   & 23.8                     & 80.8                     & 14.7                      \\
+        SAMPO~\cite{wang2025sampo}     & \multicolumn{1}{c}{55.5}    & \multicolumn{1}{c}{26.7}     & \multicolumn{1}{c}{94.7}     & \multicolumn{1}{c|}{3.7}      & SAMPO-L~\cite{wang2025sampo}    & \multicolumn{1}{c}{175.3}    & \multicolumn{1}{c}{25.3}     & \multicolumn{1}{c}{84.7}     & \multicolumn{1}{c}{12.3}      \\ 
+    
+        \midrule
+        \rowcolor{lightblue}
+        SAMPO++ (Ours) & \textbf{47.6}$^{\pm 1.8}$ & \textbf{27.9}$^{\pm 0.3}$ & \textbf{96.1}$^{\pm 0.3}$ & \textbf{3.1}$^{\pm 0.1}$ & SAMPO++ (Ours) & \textbf{152.4}$^{\pm 3.5}$ & \textbf{26.8}$^{\pm 0.2}$ & \textbf{87.5}$^{\pm 0.5}$ & \textbf{9.8}$^{\pm 0.3}$ \\
+    
+        \bottomrule
+    \vspace{-3ex}
+    \end{tabular}
+}
+\end{table*}

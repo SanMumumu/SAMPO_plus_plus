@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{\textbf{Video prediction results on the 1X dataset.} We predict 10 future frames from 2 context frames.}
+\label{tab:1X}
+
+\scalebox{1.1}{
+\begin{tabular}{lcccc}
+\toprule
+\textbf{1X WM}~\cite{1X_Technologies_1X_World_Model_2024} & FVD$\downarrow$ & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\
+\midrule
+\rowcolor{gray!20} \multicolumn{5}{c}{\textit{Action-Conditioned ($256\times256$)}} \\
+iVideoGPT~\cite{wu2024ivideogpt} & 251.8 & 24.1 & 78.3 & 20.3 \\
+SAMPO~\cite{wang2025sampo}       & 227.1 & 25.7 & 80.3 & 18.7 \\
+\midrule
+\rowcolor{blue!10} SAMPO++ (Ours) & \textbf{188.5} & \textbf{26.8} & \textbf{83.1} & \textbf{16.4} \\
+\bottomrule
+\vspace{-4ex}
+\end{tabular}
+}
+\end{table}

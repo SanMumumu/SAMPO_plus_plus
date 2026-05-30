@@ -1,0 +1,21 @@
+\begin{algorithm}[t]
+\caption{SAMPO++ Training (End-to-End)}
+\label{algo:training}
+\begin{algorithmic}[1]
+\REQUIRE Dataset $\mathcal{D}$, Encoder $\mathcal{E}$, Causal Planner $\mathcal{T}$, FlowNet $v_\theta$, Downsample $\mathcal{P}_{\downarrow}$
+\STATE $(\boldsymbol{x}, \boldsymbol{a}) \sim \mathcal{D}$; $\boldsymbol{z} = \mathcal{E}(\boldsymbol{x})$; Pyramid $\mathcal{Z} = \{\mathcal{P}_{\downarrow}(\boldsymbol{z}_t)\}_{t=1, s=1}^{T, S}$;
+\STATE $\mathcal{L}_{\text{total}} = 0$;
+\FOR{$t = 1, \dots, T$}
+    \STATE $\hat{\boldsymbol{h}}_t = \mathcal{T}(\boldsymbol{z}_{<t}^S, \boldsymbol{a}_{<t})$; 
+    \STATE $\boldsymbol{z}_t^0 = \boldsymbol{0}$; 
+    \FOR{$s = 1, \dots, S$}
+        \STATE $\tau \sim U(0,1), \ \boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$;
+        \STATE $\boldsymbol{x}_\tau = (1-\tau)\boldsymbol{\epsilon} + \tau \boldsymbol{z}_t^s$; \ \ $\boldsymbol{c} = [ \text{up}(\boldsymbol{z}_t^{s-1}) , \hat{\boldsymbol{h}}_t ]$;
+        \STATE $\boldsymbol{m} = \text{ADM}(\boldsymbol{a}_t, s)$; \ \ $\hat{\boldsymbol{v}} = v_\theta(\boldsymbol{x}_\tau, \tau, \boldsymbol{c}, \boldsymbol{m})$;
+        \STATE $\mathcal{L}_{\text{Flow}} = \|\hat{\boldsymbol{v}} - (\boldsymbol{z}_t^s - \boldsymbol{\epsilon})\|_2^2$;
+        \STATE $\mathcal{L}_{\text{total}} \leftarrow \mathcal{L}_{\text{total}} + w_s \cdot \mathcal{L}_{\text{Flow}}$;
+    \ENDFOR
+\ENDFOR
+\STATE Update all parameters $(\theta_{\mathcal{T}}, \theta_{v})$ via $\nabla \mathcal{L}_{\text{total}}$;
+\end{algorithmic}
+\end{algorithm}

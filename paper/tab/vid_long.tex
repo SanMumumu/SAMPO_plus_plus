@@ -1,0 +1,37 @@
+\begin{table}[t]
+\centering
+\caption{\textcolor{blue}{\textbf{Long-term video prediction on BAIR datasets.} We report results under two rigorous settings: standard long-horizon prediction ($2 \rightarrow 28$ frames) and extended long-horizon prediction ($2 \rightarrow 48$ frames). The results of SyncVP for 48 frames are reproduced using their official checkpoints. $\#$T denotes the number of sampled trajectories used for evaluation.
+$\dagger$: Model utilizes depth information for multi-modal prediction.}}
+\label{tab:bairbenchmark}
+\scalebox{1.2}{ 
+    \begin{tabular}{lcccc}
+    \toprule
+    \textbf{BAIR}~\cite{ebert2017selfBAIR} & \#T & FVD $\downarrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+    \midrule
+    \rowcolor{gray!20} \multicolumn{5}{c}{\textit{Standard Prediction: 2 $\rightarrow$ 28 frames}} \\
+    NPVP~\cite{ye2023unified}            & 100 & 923.6 & 84.2 & 5.7 \\
+    STM-FANet~\cite{stmfanet}            & -   & 159.6 & 84.4 & 9.4 \\
+    VPTR-NAR~\cite{ye2022vptr}           & -   & -     & 81.3 & 7.0 \\
+    Hier-VRNN~\cite{Castrejon_2019_ICCV}& 100 & 143.4 & 82.9 & 5.5 \\
+    MCVD~\cite{MCVD}                     & 10  & 120.6 & 78.5 & 7.1 \\
+    SAVP~\cite{lee2018savp}              & 100 & 116.4 & 78.9 & 6.3 \\
+    ExtDM-K4~\cite{ExtDM}                & 100 & 102.8 & 81.4 & 6.9 \\
+    STDiff~\cite{STDiff}                 & 10  & 88.1  & 81.8 & 6.9 \\
+    SyncVP~\cite{Pallotta_2025_CVPR}     & 10  & 70.5  & 79.5 & 7.9 \\
+    SyncVP$^{\dagger}$                   & 10  & 63.6  & 80.5 & 7.5 \\
+    SAMPO~\cite{wang2025sampo}           & 10   & 65.7  & 86.7 & 5.9 \\
+    \midrule
+    \rowcolor{blue!10} SAMPO++ (Ours)    & 10   & \textbf{52.5} & \textbf{88.5} & \textbf{4.6} \\
+    
+    \midrule
+    \rowcolor{gray!20} \multicolumn{5}{c}{\textit{Long-Horizon Prediction: 2 $\rightarrow$ 48 frames}} \\
+    SyncVP~\cite{Pallotta_2025_CVPR}     & 10  & 105.3 & 72.4 & 8.8 \\
+    SyncVP$^{\dagger}$                   & 10  & 92.1  & 74.8 & 8.4 \\
+    SAMPO~\cite{wang2025sampo}           & 10   & 81.3  & 83.2 & 6.7 \\
+    \midrule
+    \rowcolor{blue!10} SAMPO++ (Ours)    & 10   & \textbf{64.8} & \textbf{86.1} & \textbf{5.4} \\
+    \bottomrule
+    \vspace{-4ex}
+    \end{tabular}
+}
+\end{table}

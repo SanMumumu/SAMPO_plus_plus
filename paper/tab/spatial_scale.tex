@@ -1,0 +1,25 @@
+% \renewcommand{\arraystretch}{1.2} % 设置行距为1.5倍
+\setlength{\abovecaptionskip}{1pt}   % 默认大约是 10pt 左右，可根据需要调整
+
+\begin{table}[t] % r = 表格靠右，0.5页宽度
+    \label{tab:scales}
+    \captionof{table}{\textbf{Performance and speed trade-off}. We benchmark FVD, PSNR, average success rate on VP\(^2\) and inference speed using one A800 GPU with a batch size of 16 on the BAIR.}
+    \resizebox{\linewidth}{!}{
+        \setlength{\tabcolsep}{1.0em}
+        \begin{tabular}[t]{lccccc}
+            \toprule
+            \rowcolor{grey}\multicolumn{1}{l}{Method} & \multicolumn{1}{c}{Spatial Scales} & \multicolumn{1}{c}{FVD↓} & \multicolumn{1}{c}{PSNR↑} & \multicolumn{1}{c}{Avg. Success↑} & \multicolumn{1}{c}{Inference Time↓} \\ 
+            \midrule
+            AR$_{138M}$~\cite{wu2024ivideogpt} & - & 60.8 & 24.5 & 70.1 & 9.05 s / vid. \\ 
+            \midrule
+            SAMPO-S & [1, 2, 4, 8] & 80.7 & 23.1 & 72.2 & 1.61 s / vid \\
+            SAMPO-S & [1, 2, 4, 8, 10] & 73.1 & 24.3 & 71.3 & 3.27 s / vid \\
+            \rowcolor{lightblue} 
+            SAMPO-S & [1, 2, 3, 4, 5, 6] & \textbf{55.5} & \textbf{26.7} & 70.6 & 2.06 s / vid. \\
+            \bottomrule
+        \end{tabular}
+        }
+    \vspace{-1ex}
+\label{tab: time}
+\end{table}
+

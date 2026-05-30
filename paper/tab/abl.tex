@@ -1,0 +1,31 @@
+\begin{table*}[t]
+\centering
+\caption{\textcolor{blue}{\textbf{Comprehensive ablation studies on the BAIR and VP\(^2\) benchmarks.} We investigate the contribution of each component by systematically removing or replacing them. The default configuration represents our full SAMPO++ model. We report visual quality metrics, including short-term fidelity (FVD, SSIM at $T=16$) and long-term stability (FVD at $T=48$) on BAIR. Downstream control performance (Average Success Rate) is evaluated on the VP\(^2\) RoboDesk suite.}}
+\label{tab:ablation}
+\resizebox{0.95\linewidth}{!}{
+    \begin{tabular}{l|ccc|ccc|c}
+    \toprule
+    \multirow{2}{*}{\textbf{Configuration}} & \textbf{Latent} & \textbf{Action} & \textbf{Position} & \multicolumn{3}{c|}{\textbf{Visual Quality}} & \multicolumn{1}{c}{\textbf{Control}} \\
+     & \textbf{Space} & \textbf{Injection} & \textbf{Encoding} & FVD $\downarrow$ & SSIM $\uparrow$ & \begin{tabular}[c]{@{}c@{}}FVD$\downarrow$\\(T=48) \end{tabular} & \begin{tabular}[c]{@{}c@{}}Avg.\\ Success $\uparrow$\end{tabular} \\ \midrule
+    
+    \rowcolor{blue!10} \textbf{SAMPO++ (Full)} & \textbf{Continuous} & \textbf{ADM} & \textbf{SA-RoPE} & \textbf{52.45} & \textbf{0.885} & \textbf{64.80} & \textbf{75.4\%} \\ \midrule
+
+    % (a) 
+    \rowcolor{gray!20} \multicolumn{8}{c}{\textit{(a) Impact of Generative Paradigm}} \\
+    A1: Discrete Tokenizer (VQ-VAE) & Discrete & ADM & SA-RoPE & 65.70 & 0.867 & 81.25 & 72.2\% \\ \midrule
+
+    % (b)
+    \rowcolor{gray!20} \multicolumn{8}{c}{\textit{(b) Impact of Action Modulation Mechanism}} \\
+    B1: Concatenation & Continuous & Concat & SA-RoPE & 63.20 & 0.852 & 75.60 & 64.5\% \\
+    B2: Cross-Attention & Continuous & X-Attn & SA-RoPE & 58.90 & 0.865 & 71.30 & 68.8\% \\
+    B3: AdaLN (Standard) & Continuous & AdaLN & SA-RoPE & 55.40 & 0.878 & 68.10 & 73.1\% \\ \midrule
+
+    % (c)
+    \rowcolor{gray!20} \multicolumn{8}{c}{\textit{(c) Impact of Structural Components}} \\
+    C1: w/o SA-RoPE (Learned Pos) & Continuous & ADM & Learned & 59.80 & 0.845 & 115.4 & 71.5\% \\
+    C2: w/o Flow Rectification & Continuous & ADM & SA-RoPE & 53.10 & 0.882 & 92.50 & 73.8\% \\ 
+    \bottomrule
+    \end{tabular}
+}
+\vspace{-2ex}
+\end{table*}

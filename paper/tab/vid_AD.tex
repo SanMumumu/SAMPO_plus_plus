@@ -1,0 +1,39 @@
+\begin{table}[t]
+\centering
+\caption{\textcolor{blue}{\textbf{Lone-term video prediction on Cityscapes dataset.} We report results under two rigorous horizons: standard prediction ($2 \rightarrow 28$ frames) and extended long-horizon prediction ($2 \rightarrow 48$ frames). The $\dagger$ symbol indicates baseline results rigorously reproduced locally utilizing the authors' official pre-trained checkpoints. The best and second-best results are highlighted in \textbf{bold} and \underline{underline}, respectively.}}
+\label{tab:video_AD}
+
+\scalebox{1.15}{
+\begin{tabular}{lcccc}
+    \toprule
+    \textbf{Cityscapes}~\cite{Cityscapes} & \#T & FVD $\downarrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+    \midrule
+    \rowcolor{gray!20} \multicolumn{5}{c}{\textit{Standard Prediction: Cityscapes, 2 $\rightarrow$ 28 frames}} \\
+    SVG-LP~\cite{svg-lp}                & 100 & 1300.26 & 0.574 & 549.0 \\
+    NPVP~\cite{ye2023unified}           & 100 & 768.04  & 0.744 & 183.2 \\
+    VRNN 1L~\cite{Castrejon_2019_ICCV}  & 100 & 682.08  & 0.609 & 304.0 \\
+    Hier-VRNN~\cite{Castrejon_2019_ICCV}& 100 & 567.51  & 0.628 & 264.0 \\
+    GHVAEs~\cite{ghvaes}                & -   & 418.00  & 0.740 & 194.0 \\
+    VDT~\cite{VDT}                      & -   & 142.3   & \textbf{0.880} & - \\
+    MCVD~\cite{MCVD}                    & 10  & 141.31  & 0.690 & 112.0 \\
+    ExtDM-K4~\cite{ExtDM}               & 100 & 121.3   & 0.745 & 108.0 \\
+    STDiff~\cite{STDiff}                & 10  & 107.31  & 0.658 & 136.2 \\
+    SyncVP~\cite{Pallotta_2025_CVPR}    & 10  & 97.31   & 0.652 & 161.1 \\
+    SyncVP$^{\dagger}$~\cite{Pallotta_2025_CVPR} & 10 & 84.00 & 0.649 & 159.7 \\
+    SAMPO~\cite{wang2025sampo}          & 10  & 92.50   & 0.765 & 124.5 \\ 
+    \midrule
+    \rowcolor{blue!10} SAMPO++ (Ours)   & 10  & \textbf{73.45} & \underline{0.788} & \textbf{94.5} \\ 
+    
+    \midrule
+    \rowcolor{gray!20} \multicolumn{5}{c}{\textit{Long-Horizon Prediction: Cityscapes, 2 $\rightarrow$ 48 frames}} \\
+    SyncVP~\cite{STDiff}                & 10  & 184.20  & 0.542 & 188.4 \\
+    SyncVP$^{\dagger}$     & 10  & 165.80  & 0.565 & 192.1 \\
+    SAMPO~\cite{wang2025sampo}          & 10  & 145.60  & 0.680 & 156.0 \\
+    \midrule
+    \rowcolor{blue!10} SAMPO++ (Ours)   & 10  & \textbf{118.42} & \textbf{0.715} & \textbf{135.2} \\
+    \bottomrule
+    \vspace{-4ex}
+    \end{tabular}
+    }
+\end{table}
+

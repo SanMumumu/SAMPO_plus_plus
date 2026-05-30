@@ -1,0 +1,29 @@
+\begin{table*}[t]
+\small
+\caption{\textbf{Quantitative evaluation of visual planning efficacy on the control-centric VP\(^2\) benchmark.} We report the downstream Task Success Rate (\%) across eight distinct robotic manipulation tasks. Following standard protocol~\cite{wang2025sampo,wu2024ivideogpt}, the aggregated average performance (\textit{Avg. Success}) explicitly excludes the ``Flat Block'' task due to its inherently low simulator upper bound. All metrics represent the mean and standard deviation computed across 3 independent random seeds.
+}
+\label{tab:vp2}
+    \centering
+    \resizebox{1.0\linewidth}{!}{
+    \setlength{\tabcolsep}{0.5em}%
+    \begin{tabular}{lcccccccc|c}
+        \toprule
+        \rowcolor{grey} \multicolumn{1}{l}{Method / Task} & \begin{tabular}[c]{@{}c@{}}Robosuite \\ Push\end{tabular} & \begin{tabular}[c]{@{}c@{}}Flat \\ Block\end{tabular} & \begin{tabular}[c]{@{}c@{}}Open\\ Drawer\end{tabular} & \begin{tabular}[c]{@{}c@{}}Open\\ Slide\end{tabular} & \begin{tabular}[c]{@{}c@{}}Blue\\ Button\end{tabular} & \begin{tabular}[c]{@{}c@{}}Green\\ Button\end{tabular} & \begin{tabular}[c]{@{}c@{}}Red\\ Button\end{tabular} & \begin{tabular}[c]{@{}c@{}}Upright\\ Block\end{tabular} & \begin{tabular}[c]{@{}c@{}}Avg.\\Success$\uparrow$\end{tabular}  \\
+         \midrule
+        Simulator & 93.5$^{\pm 1.2}$ & 13.3$^{\pm 0.0}$ & 76.7$^{\pm 0.0}$ & 71.7$^{\pm 1.4}$ & 100.0$^{\pm 0.0}$ & 96.7$^{\pm 0.0}$ & 90.0$^{\pm 0.0}$ & 90.0$^{\pm 0.0}$ & 100.0 \\
+        \midrule
+        FitVid~\cite{babaeizadeh2021fitvid} & 67.7$^{\pm 6.4}$ & \textbf{9.2$^{\pm 2.8}$} & 25.3$^{\pm 8.2}$ & \underline{35.3}$^{\pm 5.5}$ & 94.0$^{\pm 4.2}$ & 84.0$^{\pm 5.5}$ & 58.7$^{\pm 5.5}$ & 51.3$^{\pm 2.9}$ & 65.6 \\
+        SVG'~\cite{villegas2019high} & 79.8$^{\pm 3.3}$  & 2.0$^{\pm 1.4}$ & 16.7$^{\pm 8.2}$ & \textbf{57.3}$^{\pm 11.0}$ & 97.3$^{\pm 2.7}$ & 81.3$^{\pm 5.5}$ & 76.0$^{\pm 9.5}$ & \underline{48.7}$^{\pm 11.1}$ & \underline{72.5} \\
+        MCVD~\cite{voleti2022mcvd} & 77.3$^{\pm 2.1}$ & 4.0$^{\pm 1.4}$ & 11.7$^{\pm 1.4}$ & 18.3$^{\pm 1.4}$ & 95.0$^{\pm 4.1}$ & 83.3$^{\pm 0.0}$ & 73.3$^{\pm 2.7}$ & 56.7$^{\pm 2.7}$ & 64.3 \\
+        MaskViT~\cite{gupta2022maskvit} & 82.6$^{\pm 2.5}$ & 4.0$^{\pm 4.1}$ & 4.0$^{\pm 4.1}$ & 8.7$^{\pm 5.5}$ & 94.7$^{\pm 1.4}$ & 64.0$^{\pm 4.1}$ & 24.0$^{\pm 8.2}$ & 62.2$^{\pm 9.5}$ & 52.1 \\
+        Struct-VRNN~\cite{minderer2019unsupervised} & 55.4$^{\pm 4.1}$ & 4.7$^{\pm 5.5}$ & 2.7$^{\pm 4.2}$ & 12.7$^{\pm 6.9}$ & 86.7$^{\pm 4.2}$ & 68.0$^{\pm 9.5}$ & 30.7$^{\pm 4.2}$ & 33.3$^{\pm 2.7}$ & 44.2 \\
+        iVideoGPT~\cite{wu2024ivideogpt} & 78.3$^{\pm 0.8}$ & 3.3$^{\pm 0.7}$ & 37.5$^{\pm 1.7}$ & 16.1$^{\pm 2.7}$ & 95.6$^{\pm 2.1}$ & 82.5$^{\pm 3.4}$ & 92.2$^{\pm 1.4}$ & 44.7$^{\pm 1.7}$ & 70.1 \\
+        
+        SAMPO~\cite{wang2025sampo} & \multicolumn{1}{c}{\underline{80.7}$^{\pm 1.4}$} & \multicolumn{1}{c}{5.5$^{\pm 1.2}$} & \multicolumn{1}{c}{\underline{40.3}$^{\pm 2.3}$} & \multicolumn{1}{c}{18.3$^{\pm 3.3}$} & \multicolumn{1}{c}{\underline{97.3}$^{\pm 1.7}$} & \multicolumn{1}{c}{\underline{85.3}$^{\pm 3.3}$} & \multicolumn{1}{c}{\underline{94.7}$^{\pm 2.1}$} & \multicolumn{1}{c|}{46.1$^{\pm 2.7}$} & \multicolumn{1}{c}{72.2} \\ 
+        \midrule
+        \rowcolor{blue!10} SAMPO++ (Ours) & \multicolumn{1}{c}{\textbf{86.2}$^{\pm 1.1}$} & \multicolumn{1}{c}{\underline{6.8}$^{\pm 0.9}$} & \multicolumn{1}{c}{\textbf{48.5}$^{\pm 1.5}$} & \multicolumn{1}{c}{32.4$^{\pm 2.1}$} & \multicolumn{1}{c}{\textbf{98.5}$^{\pm 0.5}$} & \multicolumn{1}{c}{\textbf{91.5}$^{\pm 1.2}$} & \multicolumn{1}{c}{\textbf{96.0}$^{\pm 1.1}$} & \multicolumn{1}{c|}{\textbf{64.5}$^{\pm 2.4}$} & \multicolumn{1}{c}{\textbf{75.4}} \\ \bottomrule
+
+    \end{tabular}
+    }
+    \vspace{-3ex}
+\end{table*}

@@ -1,0 +1,24 @@
+\begin{table}[t]
+    \centering
+    \resizebox{\linewidth}{!}{%
+    \begin{tabular}{lccc} %
+        \toprule
+        \textbf{OpenDV-YouTube} & \multicolumn{3}{c}{256x256 resolution, 2 $\rightarrow$ 14} \\ % 
+        \cmidrule(lr){2-4}
+        Model & FVD$\downarrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\ % 
+        \midrule
+        SyncVP~\cite{Pallotta_2025_CVPR} & 238.7 & 0.653 & 247.1 \\ SyncVP$^{\dagger}$~\cite{Pallotta_2025_CVPR} & 225.4 & 0.675 & 230.5 \\ 
+        Open-Sora~\cite{opensora} & 184.7 & 0.693 & 210.2 \\ 
+        \midrule 
+        \rowcolor{lightblue}TriFlow-S & 198.6 & 0.737 & 195.4 
+        \bottomrule
+    \end{tabular}
+    }
+    \caption{\textbf{Quantitative results on OpenDV-YouTube.} 
+    We evaluate generation fidelity at a higher spatial resolution.
+    For a fair comparison, we retrained Open-Sora with its parameter count adjusted to match TriFlow-B model (detailed in Appendix~\ref{A:Architecture}). TriFlow demonstrates robust scalability across varying model capacities.
+    % We evaluate generation fidelity at a higher spatial resolution. TriFlow demonstrates robust scalability across varying model capacities. 
+    }
+    \label{tab:opendv}
+    \vspace{-4ex}
+\end{table}

@@ -1,0 +1,17 @@
+\begin{abstract}
+
+Action-conditioned world models are fundamental for embodied agents to simulate future environments and execute long-horizon planning. Yet, current methodologies struggle with a persistent dichotomy: discrete autoregressive models offer robust causal reasoning but suffer from quantization artifacts and resolution bottlenecks, while continuous generative models yield high perceptual fidelity but lack the structured temporal consistency necessary for reliable planning. 
+To bridge this divide, we propose SAMPO++, a unified framework that seamlessly integrates temporal autoregressive modeling with scale-wise flow matching within a fully continuous latent space. 
+At its core, SAMPO++ introduces a novel ``Predict-then-Refine" paradigm: a temporal autoregressive transformer first establishes coarse-grained structural priors for future states, which a scale-wise flow matching generator subsequently refines to synthesize high-fidelity details from noise. 
+To achieve precise controllability, we design an Action-adaptive Dynamics Modulation (ADM) mechanism that injects action signals into feature statistics via scale-aware affine transformations. 
+Moreover, we mitigate long-term structural degradation by incorporating Scale-Aware spacetime Rotary Position Embeddings (SA-RoPE) alongside a flow trajectory rectification strategy, thereby enforcing rigorous spatiotemporal coherence.
+Extensive empirical evaluations demonstrate that SAMPO++ significantly surpasses state-of-the-art discrete and continuous baselines in video prediction quality, dynamic consistency, and control responsiveness, setting a new benchmark for high-fidelity continuous world modeling.
+% Videos, code, and more details are available at \href{https://sanmumumu.github.io/Flow2Act/}{project page}.
+
+
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+World Model, Autoregressive Modeling, Continuous Representation Learning.
+\end{IEEEkeywords}
