@@ -8,11 +8,8 @@ from transformers import (
 )
 from peft import LoraConfig, TaskType, get_peft_model
 
-import sys
-sys.path.append("/dev/null/SAMPO/")  # TODO
-
-from SAMPO.vq_model import CompressiveVQModel
-from SAMPO.transformer import HeadModelWithAction
+from sampo_pp.vq_model import CompressiveVQModel
+from sampo_pp.transformer import HeadModelWithAction
 
 
 def get_tokenizer(tokenizer_init_config):

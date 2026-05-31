@@ -7,7 +7,7 @@ import imageio
 import numpy as np
 import torch
 
-from SAMPO.sampo_plus import ContinuousLatentAdapter, SampoPlusModel
+from sampo_pp import ContinuousLatentAdapter, SampoPlusModel
 from utils import NPZParser
 
 

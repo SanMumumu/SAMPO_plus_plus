@@ -22,9 +22,9 @@ from transformers import (
 from accelerate import Accelerator
 from transformers.models.llama.modeling_llama import LlamaRMSNorm
 
-from SAMPO.vq_model import CompressiveVQModel
-from SAMPO.transformer import HeadModelWithAction
-from SAMPO.vq_model import LPIPS
+from sampo_pp.vq_model import CompressiveVQModel
+from sampo_pp.transformer import HeadModelWithAction
+from sampo_pp.vq_model import LPIPS
 
 
 def grad_layer_wrt_loss(loss, layer):

@@ -13,8 +13,8 @@ from PIL import Image
 from torch.optim import AdamW
 from tqdm.auto import tqdm
 
-from SAMPO.data import DATASET_NAMED_MIXES, SimpleRoboticDataLoaderv2
-from SAMPO.sampo_plus import (
+from sampo_pp.data import DATASET_NAMED_MIXES, SimpleRoboticDataLoaderv2
+from sampo_pp import (
     AdapterConfig,
     ContinuousLatentAdapter,
     FlowRendererConfig,
@@ -23,7 +23,7 @@ from SAMPO.sampo_plus import (
     TemporalPlannerConfig,
     parse_scales,
 )
-from SAMPO.utils.video_metric import Evaluator, FeatureStats
+from sampo_pp.utils.video_metric import Evaluator, FeatureStats
 
 
 logger = get_logger(__name__)
@@ -92,6 +92,21 @@ def parse_args():
     parser.add_argument('--num_flow_steps', type=int, default=25)
     parser.add_argument('--flow_loss_weights', type=str, default=None)
     parser.add_argument('--use_rectification', action='store_true')
+    # --- ablation / objective flags (one flag per ablation) ---
+    parser.add_argument('--multi_scale', default=True, action=argparse.BooleanOptionalAction,
+                        help='multi-scale planner (--no-multi_scale for the single-state baseline)')
+    parser.add_argument('--action_mode', type=str, default='acvf',
+                        choices=['concat', 'crossattn', 'adaln', 'adm', 'acvf'])
+    parser.add_argument('--rope_mode', type=str, default='pcd',
+                        choices=['learned', 'rope2d', 'spacetime', 'sarope4d', 'pcd'])
+    parser.add_argument('--lambda_noop', type=float, default=0.1)
+    parser.add_argument('--lambda_cf', type=float, default=0.1)
+    parser.add_argument('--cf_margin', type=float, default=0.1)
+    parser.add_argument('--rollout_aware_p', type=float, default=0.0,
+                        help='probability of scheduled self-forcing (Phase 5); 0 = teacher forcing')
+    parser.add_argument('--rollout_k', type=int, default=4)
+    parser.add_argument('--rollout_aware_warmup', type=int, default=0)
+    parser.add_argument('--lambda_rollout', type=float, default=1.0)
 
     parser.add_argument('--max_eval_iters', type=int, default=50)
     parser.add_argument('--use_frame_metrics', action='store_true')
@@ -181,6 +196,8 @@ def build_model(args, adapter):
             num_heads=args.planner_num_heads,
             mlp_ratio=args.planner_mlp_ratio,
             max_frames=max(args.segment_length + 4, 32),
+            latent_scales=scales,
+            multi_scale=args.multi_scale,
         ).__dict__,
         renderer=FlowRendererConfig(
             latent_channels=adapter.latent_channels,
@@ -192,7 +209,17 @@ def build_model(args, adapter):
             mlp_ratio=args.renderer_mlp_ratio,
             max_frames=max(args.segment_length + 4, 32),
             max_scales=max(len(scales) + 2, 8),
+            action_mode=args.action_mode,
+            rope_mode=args.rope_mode,
         ).__dict__,
+        lambda_noop=args.lambda_noop,
+        lambda_cf=args.lambda_cf,
+        cf_margin=args.cf_margin,
+        action_conditioned=args.action_conditioned,
+        rollout_aware_p=args.rollout_aware_p,
+        rollout_k=args.rollout_k,
+        rollout_aware_warmup=args.rollout_aware_warmup,
+        lambda_rollout=args.lambda_rollout,
     )
     return SampoPlusModel(config)
 
@@ -364,7 +391,7 @@ def main():
         with accelerator.accumulate(model):
             with torch.no_grad():
                 prepared = adapter.prepare_batch(pixel_values, args.context_length)
-            loss, metrics = model.compute_loss(prepared, actions)
+            loss, metrics = accelerator.unwrap_model(model).compute_loss(prepared, actions, global_step=completed_steps)
             accelerator.backward(loss)
             if accelerator.sync_gradients:
                 accelerator.clip_grad_norm_(model.parameters(), args.max_grad_norm)

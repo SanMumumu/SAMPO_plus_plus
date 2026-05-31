@@ -7,8 +7,8 @@ import torch
 from accelerate.utils import set_seed
 from PIL import Image
 
-from SAMPO.data import DATASET_NAMED_MIXES, SimpleRoboticDataLoaderv2
-from SAMPO.sampo_plus import AdapterConfig, ContinuousLatentAdapter, parse_scales
+from sampo_pp.data import DATASET_NAMED_MIXES, SimpleRoboticDataLoaderv2
+from sampo_pp import AdapterConfig, ContinuousLatentAdapter, parse_scales
 
 
 def parse_args():
