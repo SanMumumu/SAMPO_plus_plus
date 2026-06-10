@@ -176,18 +176,8 @@
     }
 
     .chapter {
-      display: grid;
-      grid-template-columns: 170px minmax(0, 1fr);
-      gap: 42px;
-      align-items: start;
+      max-width: 860px;
       margin-bottom: 30px;
-    }
-
-    .chapter-label {
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
     }
 
     h2 {
@@ -468,6 +458,23 @@
       font-size: 13px;
     }
 
+    .citation-box {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #0c111d;
+      color: #edf4ff;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .citation-box code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
     footer {
       padding: 34px 5vw;
       color: var(--muted);
@@ -500,7 +507,6 @@
         padding-top: 62px;
       }
 
-      .chapter,
       .tldr,
       .video-shell {
         grid-template-columns: 1fr;
@@ -553,6 +559,7 @@
       <a href="#visuals">Visuals</a>
       <a href="#vla">VLA Videos</a>
       <a href="#key-results">Key Results</a>
+      <a href="#citation">Citation</a>
     </div>
   </nav>
 
@@ -574,7 +581,6 @@
     <section class="section" id="tldr">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 01</div>
           <div>
             <h2>TL;DR</h2>
             <p class="lead">SAMPO++ turns action-conditioned world modeling into a continuous Predict-then-Refine process, preserving autoregressive structure while synthesizing high-fidelity long-horizon futures.</p>
@@ -615,7 +621,6 @@
     <section class="section alt" id="framework">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 02</div>
           <div>
             <h2>Conceptual comparison and framework overview.</h2>
             <p class="lead">SAMPO++ resolves the trade-off between discrete autoregressive reasoning and continuous synthesis through a unified Predict-then-Refine paradigm.</p>
@@ -634,7 +639,6 @@
     <section class="section" id="method">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 03</div>
           <div>
             <h2>Method</h2>
             <p class="lead">The model separates future structure prediction from visual detail synthesis, then binds both stages with action-aware modulation.</p>
@@ -671,7 +675,6 @@
     <section class="section alt" id="visuals">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 04</div>
           <div>
             <h2>Visual results</h2>
             <p class="lead">Qualitative results cover robotic manipulation, autonomous driving scenes, visual planning, and Meta-World control, showing coherent dynamics under action-conditioned generation.</p>
@@ -741,35 +744,34 @@
     <section class="section" id="vla">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 05</div>
           <div>
             <h2>VLA rollout videos</h2>
-            <p class="lead">SAMPO++ acts as a simulator for VLA action prediction. Select an episode to compare the real robot rollout with the predicted video trajectory.</p>
+            <p class="lead">SAMPO++ acts as a simulator for VLA action prediction. Select a demo to compare the real robot rollout with the predicted video trajectory.</p>
           </div>
         </div>
         <div class="video-shell">
-          <div class="episode-list" role="tablist" aria-label="VLA episode selector">
-            <button class="episode-button" type="button" data-episode="0" aria-selected="true">Eggplant basket / ep0003</button>
-            <button class="episode-button" type="button" data-episode="1" aria-selected="false">Eggplant basket / ep0019</button>
-            <button class="episode-button" type="button" data-episode="2" aria-selected="false">Eggplant basket / ep0025</button>
-            <button class="episode-button" type="button" data-episode="3" aria-selected="false">Eggplant basket / ep0030</button>
-            <button class="episode-button" type="button" data-episode="4" aria-selected="false">Spoon on towel / ep0026</button>
-            <button class="episode-button" type="button" data-episode="5" aria-selected="false">Spoon on towel / ep0033</button>
-            <button class="episode-button" type="button" data-episode="6" aria-selected="false">Spoon on towel / ep0038</button>
+          <div class="episode-list" role="tablist" aria-label="VLA demo selector">
+            <button class="episode-button" type="button" data-episode="0" aria-selected="true">Demo 1 - eggplant basket</button>
+            <button class="episode-button" type="button" data-episode="1" aria-selected="false">Demo 2 - eggplant basket</button>
+            <button class="episode-button" type="button" data-episode="2" aria-selected="false">Demo 3 - eggplant basket</button>
+            <button class="episode-button" type="button" data-episode="3" aria-selected="false">Demo 4 - eggplant basket</button>
+            <button class="episode-button" type="button" data-episode="4" aria-selected="false">Demo 5 - spoon on towel</button>
+            <button class="episode-button" type="button" data-episode="5" aria-selected="false">Demo 6 - spoon on towel</button>
+            <button class="episode-button" type="button" data-episode="6" aria-selected="false">Demo 7 - spoon on towel</button>
           </div>
           <article class="video-card">
             <div class="video-pair">
               <div class="video-panel">
                 <video id="real-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0003/ep0003_True.mp4"></video>
-                <div class="video-label"><span>Real rollout</span><span id="real-name">ep0003</span></div>
+                <div class="video-label"><span>Real rollout</span><span id="real-name">Demo 1</span></div>
               </div>
               <div class="video-panel">
                 <video id="pred-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0003/pred_video_all.mp4"></video>
-                <div class="video-label"><span>SAMPO++ predicted rollout</span><span id="pred-name">ep0003</span></div>
+                <div class="video-label"><span>SAMPO++ predicted rollout</span><span id="pred-name">Demo 1</span></div>
               </div>
             </div>
             <div class="video-body">
-              <h3 id="episode-title">put eggplant into yellow basket - ep0003</h3>
+              <h3 id="episode-title">Demo 1 - put eggplant into yellow basket</h3>
               <p id="episode-desc">Real execution is paired with the predicted future generated by SAMPO++ from VLA action prediction.</p>
             </div>
           </article>
@@ -780,7 +782,6 @@
     <section class="section alt" id="key-results">
       <div class="wrap">
         <div class="chapter">
-          <div class="chapter-label">Chapter 06</div>
           <div>
             <h2>Key results</h2>
             <p class="lead">The final quantitative summary highlights the gains in video fidelity, long-horizon stability, and downstream visual planning.</p>
@@ -810,6 +811,23 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="citation">
+      <div class="wrap">
+        <div class="chapter">
+          <div>
+            <h2>Citation</h2>
+            <p class="lead">If you find SAMPO++ useful, please cite:</p>
+          </div>
+        </div>
+        <pre class="citation-box"><code>@article{wang2026sampopp,
+  title  = {Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models},
+  author = {Wang, Sen and Zhou, Sanping and Dong, Huaiyi and Xia, Kun and Hua, Gang and Wang, Le},
+  note   = {Preprint},
+  year   = {2026}
+}</code></pre>
+      </div>
+    </section>
   </main>
 
   <footer>Built from the figures and video assets in the SAMPO++ repository.</footer>
@@ -817,44 +835,44 @@
   <script>
     const episodes = [
       {
-        title: "put eggplant into yellow basket - ep0003",
-        name: "ep0003",
+        title: "Demo 1 - put eggplant into yellow basket",
+        name: "Demo 1",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0003/ep0003_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0003/pred_video_all.mp4",
       },
       {
-        title: "put eggplant into yellow basket - ep0019",
-        name: "ep0019",
+        title: "Demo 2 - put eggplant into yellow basket",
+        name: "Demo 2",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0019/ep0019_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0019/pred_video_all.mp4",
       },
       {
-        title: "put eggplant into yellow basket - ep0025",
-        name: "ep0025",
+        title: "Demo 3 - put eggplant into yellow basket",
+        name: "Demo 3",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0025/ep0025_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0025/pred_video_all.mp4",
       },
       {
-        title: "put eggplant into yellow basket - ep0030",
-        name: "ep0030",
+        title: "Demo 4 - put eggplant into yellow basket",
+        name: "Demo 4",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0030/ep0030_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0030/pred_video_all.mp4",
       },
       {
-        title: "put the spoon on the towel - ep0026",
-        name: "ep0026",
+        title: "Demo 5 - put the spoon on the towel",
+        name: "Demo 5",
         real: "assets/vla/widowx_spoon_on_towel/ep0026/ep0026_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0026/pred_video_all.mp4",
       },
       {
-        title: "put the spoon on the towel - ep0033",
-        name: "ep0033",
+        title: "Demo 6 - put the spoon on the towel",
+        name: "Demo 6",
         real: "assets/vla/widowx_spoon_on_towel/ep0033/ep0033_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0033/pred_video_all.mp4",
       },
       {
-        title: "put the spoon on the towel - ep0038",
-        name: "ep0038",
+        title: "Demo 7 - put the spoon on the towel",
+        name: "Demo 7",
         real: "assets/vla/widowx_spoon_on_towel/ep0038/ep0038_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0038/pred_video_all.mp4",
       },
