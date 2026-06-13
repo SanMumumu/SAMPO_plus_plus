@@ -632,7 +632,7 @@
         <div class="tldr">
           <article class="note-card">
             <strong>Abstract</strong>
-            <p>Discrete autoregressive models reason well but introduce quantization artifacts; continuous generative models synthesize rich details but struggle with structured long-horizon control. SAMPO++ combines temporal autoregression and scale-wise flow matching in continuous latent space to close this gap.</p>
+            <p>Action-conditioned world models are useful for embodied agents only when their predicted futures remain controllable by actions and stable under long-horizon rollout. We present SAMPO++, an embodied world model that treats action-conditioned prediction as a scale-decoupled controlled dynamical system rather than as conventional action-conditioned video generation. SAMPO++ couples temporal autoregression with scale-wise flow matching in a continuous latent pyramid. A multi-scale temporal planner summarizes the latent history with scale-matched recurrent states, allowing dynamics at different resolutions to be conditioned by appropriate temporal contexts. An Action-Controlled Velocity Field (ACVF) separates action-free passive drift from action-induced residual dynamics, making the action an explicit bounded control input to the flow velocity instead of a passive conditioning token. To improve cross-scale consistency and closed-loop stability, SAMPO++ further uses Pyramid-Consistent RoPE (PC-RoPE) and rollout-aware training, aligning scale-wise coordinates and exposing the model to its own autoregressive prediction distribution during training. Beyond standard perceptual metrics such as FVD, PSNR, SSIM, and LPIPS, we evaluate world-model-native properties including action alignment, counterfactual accuracy, no-op stability, and rollout drift. We further study SAMPO++ as a learned controllable simulator for policy evaluation, action-sequence ranking, and model-based planning, where candidate policies can be rolled out and compared before execution. Experiments on robotic manipulation, autonomous driving, visual planning, and model-based reinforcement learning show that SAMPO++ improves both visual prediction quality and action-controllable long-horizon stability over strong discrete and continuous baselines.</p>
           </article>
           <div class="claim-grid" aria-label="SAMPO++ claims">
             <article class="claim">
@@ -653,7 +653,7 @@
               <span>3</span>
               <div>
                 <h3>Action fidelity</h3>
-                <p>Action-adaptive modulation and scale-aware position encoding improve controllability over long rollouts.</p>
+                <p>ACVF and PC-RoPE improve controllability, cross-scale consistency, and closed-loop stability over long rollouts.</p>
               </div>
             </article>
           </div>
@@ -673,7 +673,7 @@
           <img src="assets/figures/fig1.webp" alt="Conceptual comparison and framework overview from the SAMPO++ paper.">
           <div class="figure-body">
             <h3>Conceptual comparison and framework overview</h3>
-            <p><strong>Current dichotomy:</strong> discrete AR models suffer from quantization artifacts, while standard continuous models are restricted to fixed-length synthesis. <strong>SAMPO++ solution:</strong> temporal autoregression and scale-wise flow matching are unified on continuous latents with action-adaptive modulation. <strong>Performance:</strong> the resulting model improves long-term coherence and action fidelity.</p>
+            <p><strong>Current dichotomy:</strong> discrete AR models suffer from quantization artifacts, while standard continuous models are restricted to fixed-length synthesis. <strong>SAMPO++ solution:</strong> temporal autoregression and scale-wise flow matching are unified on continuous latent pyramids with explicit action-controlled velocity fields. <strong>Performance:</strong> the resulting model improves long-term coherence and action fidelity.</p>
           </div>
         </article>
       </div>
@@ -702,7 +702,7 @@
           </article>
           <article class="method-item">
             <b>Action-aware dynamics</b>
-            <p>ADM and SA-RoPE improve controllability and reduce rollout drift.</p>
+            <p>ACVF, PC-RoPE, and rollout-aware training improve controllability and reduce rollout drift.</p>
           </article>
         </div>
         <article class="figure-card">
@@ -777,7 +777,7 @@
             <div class="figure-media"><img src="assets/figures/fig_exp1.webp" alt="Quantitative and ablation summary figure from the SAMPO++ paper." loading="lazy"></div>
             <div class="figure-body">
               <h3>Quantitative and ablation summary</h3>
-              <p>Ablations isolate the contributions of continuous latents, ADM, SA-RoPE, and flow rectification.</p>
+              <p>Ablations isolate the contributions of continuous latents, ACVF, PC-RoPE, and rollout-aware training.</p>
             </div>
           </article>
         </div>
@@ -797,19 +797,18 @@
             <button class="episode-button" type="button" data-episode="0" aria-selected="true">Demo 1 - eggplant basket</button>
             <button class="episode-button" type="button" data-episode="1" aria-selected="false">Demo 2 - eggplant basket</button>
             <button class="episode-button" type="button" data-episode="2" aria-selected="false">Demo 3 - eggplant basket</button>
-            <button class="episode-button" type="button" data-episode="3" aria-selected="false">Demo 4 - eggplant basket</button>
+            <button class="episode-button" type="button" data-episode="3" aria-selected="false">Demo 4 - spoon on towel</button>
             <button class="episode-button" type="button" data-episode="4" aria-selected="false">Demo 5 - spoon on towel</button>
             <button class="episode-button" type="button" data-episode="5" aria-selected="false">Demo 6 - spoon on towel</button>
-            <button class="episode-button" type="button" data-episode="6" aria-selected="false">Demo 7 - spoon on towel</button>
           </div>
           <article class="video-card">
             <div class="video-pair">
               <div class="video-panel">
-                <video id="real-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0003/ep0003_True.mp4"></video>
+                <video id="real-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0019/ep0019_True.mp4"></video>
                 <div class="video-label"><span>Real rollout</span><span id="real-name">Demo 1</span></div>
               </div>
               <div class="video-panel">
-                <video id="pred-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0003/pred_video_all.mp4"></video>
+                <video id="pred-video" controls muted playsinline preload="metadata" src="assets/vla/widowx_put_eggplant_in_basket/ep0019/pred_video_all.mp4"></video>
                 <div class="video-label"><span>SAMPO++ predicted rollout</span><span id="pred-name">Demo 1</span></div>
               </div>
             </div>
@@ -880,42 +879,36 @@
       {
         title: "Demo 1 - put eggplant into yellow basket",
         name: "Demo 1",
-        real: "assets/vla/widowx_put_eggplant_in_basket/ep0003/ep0003_True.mp4",
-        pred: "assets/vla/widowx_put_eggplant_in_basket/ep0003/pred_video_all.mp4",
-      },
-      {
-        title: "Demo 2 - put eggplant into yellow basket",
-        name: "Demo 2",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0019/ep0019_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0019/pred_video_all.mp4",
       },
       {
-        title: "Demo 3 - put eggplant into yellow basket",
-        name: "Demo 3",
+        title: "Demo 2 - put eggplant into yellow basket",
+        name: "Demo 2",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0025/ep0025_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0025/pred_video_all.mp4",
       },
       {
-        title: "Demo 4 - put eggplant into yellow basket",
-        name: "Demo 4",
+        title: "Demo 3 - put eggplant into yellow basket",
+        name: "Demo 3",
         real: "assets/vla/widowx_put_eggplant_in_basket/ep0030/ep0030_True.mp4",
         pred: "assets/vla/widowx_put_eggplant_in_basket/ep0030/pred_video_all.mp4",
       },
       {
-        title: "Demo 5 - put the spoon on the towel",
-        name: "Demo 5",
+        title: "Demo 4 - put the spoon on the towel",
+        name: "Demo 4",
         real: "assets/vla/widowx_spoon_on_towel/ep0026/ep0026_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0026/pred_video_all.mp4",
       },
       {
-        title: "Demo 6 - put the spoon on the towel",
-        name: "Demo 6",
+        title: "Demo 5 - put the spoon on the towel",
+        name: "Demo 5",
         real: "assets/vla/widowx_spoon_on_towel/ep0033/ep0033_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0033/pred_video_all.mp4",
       },
       {
-        title: "Demo 7 - put the spoon on the towel",
-        name: "Demo 7",
+        title: "Demo 6 - put the spoon on the towel",
+        name: "Demo 6",
         real: "assets/vla/widowx_spoon_on_towel/ep0038/ep0038_True.mp4",
         pred: "assets/vla/widowx_spoon_on_towel/ep0038/pred_video_all.mp4",
       },
