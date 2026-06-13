@@ -193,6 +193,7 @@
 
     .section {
       padding: 72px 5vw;
+      scroll-margin-top: 86px;
     }
 
     .section.alt {
@@ -227,9 +228,9 @@
 
     .tldr {
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
-      gap: 26px;
-      align-items: stretch;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: start;
     }
 
     .note-card,
@@ -243,34 +244,41 @@
     }
 
     .note-card {
-      padding: 28px;
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 26px;
+      align-items: start;
+      padding: 26px 30px;
     }
 
     .note-card strong {
       display: block;
-      margin-bottom: 10px;
       color: var(--blue);
-      font-size: 15px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .note-card p {
       margin: 0;
       color: #314057;
-      font-size: 18px;
+      font-size: 16px;
+      line-height: 1.72;
     }
 
     .claim-grid {
       display: grid;
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .claim {
       display: grid;
-      grid-template-columns: 42px minmax(0, 1fr);
-      gap: 14px;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 16px;
       align-items: start;
-      padding: 18px;
+      min-height: 150px;
+      padding: 20px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.72);
@@ -279,8 +287,8 @@
     .claim span {
       display: grid;
       place-items: center;
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
       color: #fff;
       font-weight: 900;
@@ -291,8 +299,8 @@
     .claim:nth-child(3) span { background: var(--copper); }
 
     .claim h3 {
-      margin: 0 0 4px;
-      font-size: 16px;
+      margin: 0 0 6px;
+      font-size: 17px;
       letter-spacing: 0;
     }
 
@@ -515,6 +523,10 @@
     }
 
     @media (max-width: 940px) {
+      .section {
+        scroll-margin-top: 150px;
+      }
+
       .nav {
         align-items: flex-start;
         flex-direction: column;
@@ -558,10 +570,21 @@
       .section { padding: 52px 5vw; }
       .method-grid,
       .figure-grid,
+      .claim-grid,
       .metrics,
       .video-pair,
       .episode-list {
         grid-template-columns: 1fr;
+      }
+
+      .note-card {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 22px;
+      }
+
+      .claim {
+        min-height: 0;
       }
 
       .button {
