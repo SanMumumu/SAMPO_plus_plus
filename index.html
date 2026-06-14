@@ -7,17 +7,19 @@
   <title>SAMPO++ | Embodied World Models</title>
   <style>
     :root {
-      --bg: #f4f7fb;
+      --bg: #f7fbff;
       --surface: #ffffff;
-      --surface-soft: #eef3f8;
-      --ink: #141a2d;
-      --muted: #667386;
-      --line: #d9e1ea;
-      --blue: #3157d5;
-      --teal: #109c84;
+      --surface-soft: #eef6ff;
+      --ink: #12213a;
+      --muted: #5f6f86;
+      --line: #dbe8f5;
+      --blue: #1f68d5;
+      --blue-dark: #174ea6;
+      --blue-soft: #e7f1ff;
+      --teal: #1597b8;
       --copper: #c66a3d;
       --violet: #6f55d8;
-      --shadow: 0 18px 45px rgba(21, 31, 55, 0.1);
+      --shadow: 0 12px 32px rgba(20, 65, 125, 0.1);
     }
 
     * { box-sizing: border-box; }
@@ -25,8 +27,7 @@
 
     body {
       margin: 0;
-      background:
-        linear-gradient(180deg, rgba(238, 243, 248, 0.9), rgba(244, 247, 251, 0.96) 42%, #f9fbfd 100%);
+      background: var(--bg);
       color: var(--ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
@@ -45,8 +46,8 @@
       gap: 24px;
       min-height: 62px;
       padding: 0 5vw;
-      background: rgba(244, 247, 251, 0.88);
-      border-bottom: 1px solid rgba(20, 26, 45, 0.08);
+      background: rgba(247, 251, 255, 0.92);
+      border-bottom: 1px solid rgba(31, 104, 213, 0.12);
       backdrop-filter: blur(18px);
     }
 
@@ -61,7 +62,7 @@
       width: 28px;
       height: 28px;
       border-radius: 7px;
-      background: linear-gradient(135deg, var(--blue) 0 48%, var(--teal) 48% 76%, var(--copper) 76%);
+      background: linear-gradient(135deg, var(--blue) 0 50%, var(--teal) 50%);
       box-shadow: 0 9px 24px rgba(49, 87, 213, 0.22);
     }
 
@@ -83,14 +84,27 @@
     .nav-links a:hover { border-color: var(--blue); color: var(--blue); }
 
     .hero {
-      padding: 86px 5vw 64px;
+      padding: 44px 5vw 48px;
       text-align: center;
-      border-bottom: 1px solid rgba(20, 26, 45, 0.08);
+      background:
+        radial-gradient(circle at top, rgba(31, 104, 213, 0.12), transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      border-bottom: 1px solid rgba(31, 104, 213, 0.12);
     }
 
     .hero-inner {
-      width: min(1020px, 100%);
+      width: min(1120px, 100%);
       margin: 0 auto;
+    }
+
+    .hero-logo {
+      width: min(104px, 30vw);
+      aspect-ratio: 1;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: 0 18px 42px rgba(31, 104, 213, 0.18);
     }
 
     .venue {
@@ -99,7 +113,7 @@
       justify-content: center;
       min-height: 34px;
       padding: 0 14px;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
       color: var(--blue);
       border: 1px solid rgba(49, 87, 213, 0.24);
       border-radius: 999px;
@@ -109,24 +123,25 @@
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(58px, 10vw, 116px);
-      line-height: 0.94;
+      max-width: 1100px;
+      margin: 0 auto;
+      font-size: clamp(32px, 4.2vw, 52px);
+      line-height: 1.04;
       letter-spacing: 0;
     }
 
     .subtitle {
-      max-width: 900px;
-      margin: 22px auto 0;
-      color: #263245;
-      font-size: clamp(23px, 3vw, 34px);
-      line-height: 1.18;
-      font-weight: 780;
+      max-width: 1040px;
+      margin: 18px auto 0;
+      color: #30425f;
+      font-size: clamp(18px, 1.7vw, 22px);
+      line-height: 1.28;
+      font-weight: 740;
     }
 
     .authors {
       max-width: 850px;
-      margin: 22px auto 0;
+      margin: 18px auto 0;
       color: var(--muted);
       font-size: 17px;
     }
@@ -162,12 +177,36 @@
       line-height: 1.55;
     }
 
+    .note-line {
+      margin: 8px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .keywords span {
+      padding: 6px 11px;
+      border: 1px solid rgba(31, 104, 213, 0.18);
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     .actions {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
-      margin-top: 30px;
+      margin-top: 22px;
     }
 
     .button {
@@ -175,14 +214,14 @@
       align-items: center;
       justify-content: center;
       min-height: 44px;
-      padding: 0 18px;
-      border: 1px solid rgba(20, 26, 45, 0.14);
-      border-radius: 8px;
+      padding: 0 19px;
+      border: 1px solid rgba(31, 104, 213, 0.2);
+      border-radius: 999px;
       background: var(--surface);
-      color: var(--ink);
+      color: var(--blue-dark);
       font-size: 15px;
       font-weight: 800;
-      box-shadow: 0 10px 22px rgba(21, 31, 55, 0.08);
+      box-shadow: 0 8px 20px rgba(31, 104, 213, 0.1);
     }
 
     .button.primary {
@@ -192,14 +231,14 @@
     }
 
     .section {
-      padding: 72px 5vw;
+      padding: 68px 5vw;
       scroll-margin-top: 86px;
     }
 
     .section.alt {
-      background: rgba(255, 255, 255, 0.72);
-      border-top: 1px solid rgba(20, 26, 45, 0.08);
-      border-bottom: 1px solid rgba(20, 26, 45, 0.08);
+      background: #ffffff;
+      border-top: 1px solid rgba(31, 104, 213, 0.1);
+      border-bottom: 1px solid rgba(31, 104, 213, 0.1);
     }
 
     .wrap {
@@ -208,20 +247,23 @@
     }
 
     .chapter {
-      max-width: 860px;
+      max-width: 920px;
+      margin-right: auto;
+      margin-left: auto;
       margin-bottom: 30px;
+      text-align: center;
     }
 
     h2 {
       margin: 0;
-      font-size: clamp(34px, 4.7vw, 56px);
-      line-height: 1;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.08;
       letter-spacing: 0;
     }
 
     .lead {
       max-width: 760px;
-      margin: 18px 0 0;
+      margin: 14px auto 0;
       color: var(--muted);
       font-size: 18px;
     }
@@ -318,6 +360,7 @@
       width: 100%;
       margin: 0 auto;
       background: #fff;
+      border: 0;
     }
 
     .figure-body,
@@ -387,6 +430,7 @@
       min-height: 280px;
       padding: 12px;
       background: #fff;
+      overflow: hidden;
     }
 
     .video-shell {
@@ -619,12 +663,13 @@
 
   <header class="hero" id="top">
     <div class="hero-inner">
+      <img class="hero-logo" src="assets/figures/ui.png" alt="SAMPO++ project icon">
       <div class="venue">Embodied World Models</div>
-      <h1>SAMPO++</h1>
-      <p class="subtitle">Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models</p>
+      <h1>SAMPO++: Unified Temporal Autoregression and Scale-Wise Flow Matching for Embodied World Models</h1>
+      <p class="subtitle">A scale-decoupled, action-controlled, closed-loop-stable world model for embodied agents.</p>
       <p class="authors">
         <a href="https://sanmumumu.github.io/" target="_blank" rel="noopener">Sen Wang</a><sup>1,2</sup>,
-        <a href="https://gr.xjtu.edu.cn/spzhou/" target="_blank" rel="noopener">Sanping Zhou</a><sup>1,2</sup>,
+        <a href="https://gr.xjtu.edu.cn/spzhou/" target="_blank" rel="noopener">Sanping Zhou</a><sup>1,2,*</sup>,
         Huaiyi Dong<sup>1,2</sup>,
         <a href="https://scholar.google.com/citations?user=eVEaTx4AAAAJ&amp;hl=zh-CN" target="_blank" rel="noopener">Kun Xia</a><sup>1,2</sup>,
         <a href="https://www.ganghua.org/" target="_blank" rel="noopener">Gang Hua</a><sup>3</sup>,
@@ -635,10 +680,17 @@
         <span><sup>2</sup>Xi'an Jiaotong University</span>
         <span><sup>3</sup>Amazon Alexa AI</span>
       </p>
+      <p class="note-line">*Indicates Corresponding Author</p>
+      <div class="keywords" aria-label="Research keywords">
+        <span>Action-Conditioned World Models</span>
+        <span>Continuous Latent Pyramid</span>
+        <span>ACVF</span>
+        <span>PC-RoPE</span>
+      </div>
       <div class="actions">
-        <a class="button primary" href="https://github.com/SanMumumu/SAMPO_plus_plus">Code</a>
-        <a class="button" href="#visuals">Figures</a>
-        <a class="button" href="#vla">VLA Videos</a>
+        <a class="button primary" href="https://github.com/SanMumumu/SAMPO_plus_plus" target="_blank" rel="noopener">Code</a>
+        <a class="button" href="assets/docs/SAMPO++_preview.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="button" href="#framework">Project Page</a>
       </div>
     </div>
   </header>
