@@ -24,6 +24,7 @@ from .renderer import ScaleAwareFlowRenderer, SILoss
 from .acvf import ACVFBlock, counterfactual_velocity_ranking, noop_consistency_loss, scale_action_energy
 from .pcd_rope import PCDRoPE, SpatialRoPE, build_spatial_rope
 from .model import SampoPlusModel, build_sampo_plus
+from .pi0_interface import Pi0ActionSpec, Pi0SampoInterface, prepare_pi0_actions
 
 __all__ = [
     'AdapterConfig',
@@ -44,4 +45,7 @@ __all__ = [
     'build_spatial_rope',
     'SampoPlusModel',
     'build_sampo_plus',
+    'Pi0ActionSpec',
+    'Pi0SampoInterface',
+    'prepare_pi0_actions',
 ]

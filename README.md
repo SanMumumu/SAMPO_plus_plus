@@ -9,6 +9,7 @@ Sen Wang · Sanping Zhou · Huaiyi Dong · Kun Xia · Gang Hua · Le Wang
 *Institute of Artificial Intelligence and Robotics, Xi'an Jiaotong University*
 
 [![Project Page](https://img.shields.io/badge/Project%20Page-SAMPO%2B%2B-1f9d55?style=flat-square)](https://sanmumumu.github.io/SAMPO_plus_plus/)
+[![PDF](https://img.shields.io/badge/PDF-preview-1f68d5?style=flat-square)](https://sanmumumu.github.io/SAMPO_plus_plus/assets/docs/SAMPO++_preview.pdf)
 [![Python](https://img.shields.io/badge/Python-3.9-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-%E2%89%A51.12-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-see%20LICENSE-blue?style=flat-square)](LICENSE)
@@ -67,6 +68,7 @@ sampo_pp/                  # self-contained, flag-driven world-model core
 ├── model.py               #   SampoPlusModel: compute_loss / rollout / build_sampo_plus
 ├── adapter.py             #   ContinuousLatentAdapter (VAE → latent pyramid)
 ├── metrics.py             #   world-model-native metrics
+├── pi0_interface.py       #   pi0-style action chunk -> SAMPO++ rollout adapter
 ├── config.py, common.py   #   dataclass configs + shared blocks
 └── data.py, utils/, vq_model.py, transformer.py   # forwarding shims to the core package
 train_tokenizer.py         # Stage 1 — adapter validation / export
@@ -156,6 +158,38 @@ prepared = adapter.prepare_batch(video, context_length=2)          # video: [B,T
 loss, metrics = model.compute_loss(prepared, actions)              # flow + no-op + cf (+ rollout)
 out = model.rollout(adapter, context_frames=video[:, :2], actions=actions,
                     num_future_frames=14, num_flow_steps=25)       # -> {frames, predicted_fine, plans}
+```
+
+### pi0-style policy interface
+
+SAMPO++ can be used as a learned controllable simulator for pi0-style VLA action
+chunks. The interface is intentionally dependency-free: pass the action sequence
+emitted by a pi0 policy, and the adapter handles action normalization, no-op
+context padding, horizon padding/truncation, and SAMPO++ rollout.
+
+```python
+from sampo_pp import Pi0ActionSpec, Pi0SampoInterface
+
+pi0 = Pi0SampoInterface(
+    model,
+    adapter,
+    Pi0ActionSpec(action_dim=4, horizon=16, normalization="identity"),
+)
+
+# pi0_actions: [T, D] or [B, T, D], e.g. from a pi0 policy action head.
+rollout = pi0.rollout(
+    context_frames=video[:, :2],
+    pi0_actions=pi0_actions,
+    num_future_frames=16,
+    num_flow_steps=25,
+)
+
+# Candidate policy evaluation / action-sequence ranking.
+indices = pi0.rank_action_sequences(
+    video[:, :2],
+    candidate_actions,  # [N, T, D] or [B, N, T, D]
+    score_fn=lambda out: -out["frames"].flatten(1).var(dim=1),
+)
 ```
 
 ---

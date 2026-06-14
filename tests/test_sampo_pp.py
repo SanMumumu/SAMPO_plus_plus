@@ -12,6 +12,8 @@ from sampo_pp import (
     AdapterConfig,
     ContinuousLatentAdapter,
     FlowRendererConfig,
+    Pi0ActionSpec,
+    Pi0SampoInterface,
     ScaleAwareFlowRenderer,
     SILoss,
     TemporalPlanner,
@@ -237,6 +239,21 @@ def test_world_model_single_scale_rollout_contract():
     rollout = model.rollout(adapter, context_frames=video[:, :2], actions=actions,
                             num_future_frames=4, num_flow_steps=4)
     assert rollout['plans'].shape == (2, 4, 96)
+    assert rollout['frames'].shape == video.shape
+
+
+def test_pi0_interface_builds_context_padded_rollout_actions():
+    adapter, model = _model(multi_scale=True)
+    video = make_video(batch_size=1, steps=6)
+    pi0_actions = torch.randn(3, 4)
+    interface = Pi0SampoInterface(model, adapter, Pi0ActionSpec(action_dim=4, horizon=4))
+
+    actions = interface.build_rollout_actions(video[:, :2], pi0_actions)
+    rollout = interface.rollout(video[:, :2], pi0_actions, num_future_frames=4, num_flow_steps=2)
+
+    assert actions.shape == (1, 6, 4)
+    assert float(actions[:, :2].abs().max()) == 0.0
+    assert float(actions[:, -1].abs().max()) == 0.0
     assert rollout['frames'].shape == video.shape
 
 
